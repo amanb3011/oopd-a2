@@ -835,6 +835,7 @@ CMakeFiles/demo.dir/examples/demo.cpp.o: \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Resource.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Catalog.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Book.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/EBook.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/ElectronicResource.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Exceptions.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Journal.h

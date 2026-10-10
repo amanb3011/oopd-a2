@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/apple/Desktop/Assignments/BookManagement/src/Book.cpp" "CMakeFiles/bookmgmt.dir/src/Book.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Book.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Budget.cpp" "CMakeFiles/bookmgmt.dir/src/Budget.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Budget.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Catalog.cpp" "CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o.d"
+  "/Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp" "CMakeFiles/bookmgmt.dir/src/EBook.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/EBook.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/ElectronicResource.cpp" "CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Journal.cpp" "CMakeFiles/bookmgmt.dir/src/Journal.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Journal.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Money.cpp" "CMakeFiles/bookmgmt.dir/src/Money.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Money.cpp.o.d"

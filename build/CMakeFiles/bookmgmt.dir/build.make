@@ -142,10 +142,24 @@ CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/ElectronicResource.cpp -o CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.s
 
+CMakeFiles/bookmgmt.dir/src/EBook.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
+CMakeFiles/bookmgmt.dir/src/EBook.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp
+CMakeFiles/bookmgmt.dir/src/EBook.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/bookmgmt.dir/src/EBook.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/EBook.cpp.o -MF CMakeFiles/bookmgmt.dir/src/EBook.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/EBook.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp
+
+CMakeFiles/bookmgmt.dir/src/EBook.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/EBook.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp > CMakeFiles/bookmgmt.dir/src/EBook.cpp.i
+
+CMakeFiles/bookmgmt.dir/src/EBook.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/EBook.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp -o CMakeFiles/bookmgmt.dir/src/EBook.cpp.s
+
 CMakeFiles/bookmgmt.dir/src/Budget.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
 CMakeFiles/bookmgmt.dir/src/Budget.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/Budget.cpp
 CMakeFiles/bookmgmt.dir/src/Budget.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/bookmgmt.dir/src/Budget.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bookmgmt.dir/src/Budget.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/Budget.cpp.o -MF CMakeFiles/bookmgmt.dir/src/Budget.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/Budget.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/Budget.cpp
 
 CMakeFiles/bookmgmt.dir/src/Budget.cpp.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/bookmgmt.dir/src/Budget.cpp.s: cmake_force
 CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
 CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/Catalog.cpp
 CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o -MF CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/Catalog.cpp
 
 CMakeFiles/bookmgmt.dir/src/Catalog.cpp.i: cmake_force
@@ -173,7 +187,7 @@ CMakeFiles/bookmgmt.dir/src/Catalog.cpp.s: cmake_force
 CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
 CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/Acquisition.cpp
 CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o -MF CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/Acquisition.cpp
 
 CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.i: cmake_force
@@ -191,6 +205,7 @@ bookmgmt_OBJECTS = \
 "CMakeFiles/bookmgmt.dir/src/Book.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Journal.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o" \
+"CMakeFiles/bookmgmt.dir/src/EBook.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Budget.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o"
@@ -203,12 +218,13 @@ libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Resource.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Book.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Journal.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o
+libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/EBook.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Budget.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/build.make
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library libbookmgmt.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX static library libbookmgmt.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/bookmgmt.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bookmgmt.dir/link.txt --verbose=$(VERBOSE)
 

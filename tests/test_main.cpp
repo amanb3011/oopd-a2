@@ -93,6 +93,48 @@ static void testResourcesAndCost() {
     CHECK(journalOut.str().find("issues per year: 52") != std::string::npos);
     CHECK(journalOut.str().find("subscription years: 2") != std::string::npos);
 
+        EBook eb(
+        "E1",
+        "Effective Modern C++",
+        {"Scott Meyers"},
+        "978-1491903995",
+        "O'Reilly",
+        2014,
+        Money::of(20),
+        "https://example.com/ebook",
+        FileFormat::EPUB,
+        true,
+        LicenseModel::AnnualSubscription,
+        Money::of(100)
+    );
+
+    CHECK(eb.category() == ResourceCategory::EBook);
+    CHECK(eb.isDigital());
+    CHECK(eb.authors().size() == 1);
+    CHECK(eb.isbn() == "978-1491903995");
+    CHECK(eb.format() == FileFormat::EPUB);
+    CHECK(eb.drmProtected());
+
+    CHECK(eb.costFor(5) == Money::of(200));
+
+    std::ostringstream ebookOut;
+    ebookOut << eb;
+
+    CHECK(ebookOut.str().find("access url: https://example.com/ebook")
+        != std::string::npos);
+
+    CHECK(ebookOut.str().find("authors: Scott Meyers")
+        != std::string::npos);
+
+    CHECK(ebookOut.str().find("isbn: 978-1491903995")
+        != std::string::npos);
+
+    CHECK(ebookOut.str().find("file format: EPUB")
+        != std::string::npos);
+
+    CHECK(ebookOut.str().find("drm protected: yes")
+        != std::string::npos);
+
 }
 
 static void testCatalog() {
@@ -103,8 +145,21 @@ static void testCatalog() {
                     2017, Money::of(1));
     c.emplace<ElectronicResource>("R1", "ACM Digital Library", "ACM", 2026, Money::of(1),
                                   "url");
+    c.emplace<EBook>(
+    "E1",
+    "EBook Test",
+    std::vector<std::string>{"Author"},
+    "isbn-ebook",
+    "Publisher",
+    2025,
+    Money::of(10),
+    "ebook-url",
+    FileFormat::PDF,
+    false
+);
 
-    CHECK(c.size() == 3);
+    CHECK(c.byCategory(ResourceCategory::EBook).size() == 1);
+    CHECK(c.size() == 4);
     CHECK(c.contains("B1"));
     CHECK(c.find("nope") == nullptr);
     CHECK_THROWS(c.get("nope"), NotFoundError);
@@ -114,7 +169,7 @@ static void testCatalog() {
 
     CHECK(c.searchTitle("clean").size() == 2);
     CHECK(c.byCategory(ResourceCategory::ElectronicResource).size() == 1);
-    CHECK(c.where([](const Resource& r) { return r.isDigital(); }).size() == 1);
+    CHECK(c.where([](const Resource& r) { return r.isDigital(); }).size() == 2);  
 
     CHECK(c.holdings("B1") == 0);
     c.addHoldings("B1", 3);
@@ -122,7 +177,7 @@ static void testCatalog() {
     CHECK_THROWS(c.addHoldings("B1", -5), std::invalid_argument);
 
     c.remove("R1");
-    CHECK(c.size() == 2);
+    CHECK(c.size() == 3);
     CHECK_THROWS(c.remove("R1"), NotFoundError);
 }
 
@@ -130,12 +185,19 @@ static void testBudget() {
     Budget b(Money::of(1000));
     b.setQuota(ResourceCategory::Book, {5, Money::of(400)});
     b.setQuota(ResourceCategory::Journal, {3, Money::of(600)});
+    b.setQuota(ResourceCategory::EBook, {10, Money::of(500)});
 
     CHECK(b.check(ResourceCategory::Book, 2, Money::of(200)).empty());
     CHECK(!b.check(ResourceCategory::Book, 6, Money::of(10)).empty());   // units
     CHECK(!b.check(ResourceCategory::Book, 1, Money::of(401)).empty());  // spend
     CHECK(!b.check(ResourceCategory::ElectronicResource, 1, Money::of(1001)).empty());  // overall
     CHECK(b.check(ResourceCategory::ElectronicResource, 1, Money::of(900)).empty());    // no quota
+
+    CHECK(b.check(ResourceCategory::EBook, 5, Money::of(300)).empty());
+
+    CHECK(!b.check(ResourceCategory::EBook, 11, Money::of(100)).empty());
+
+    CHECK(!b.check(ResourceCategory::EBook, 1, Money::of(600)).empty());
 
     b.commit(ResourceCategory::Book, 4, Money::of(300));
     CHECK(b.spent() == Money::of(300));

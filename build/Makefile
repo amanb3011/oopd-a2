@@ -285,6 +285,30 @@ src/Catalog.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Catalog.cpp.s
 .PHONY : src/Catalog.cpp.s
 
+src/EBook.o: src/EBook.cpp.o
+.PHONY : src/EBook.o
+
+# target to build an object file
+src/EBook.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/EBook.cpp.o
+.PHONY : src/EBook.cpp.o
+
+src/EBook.i: src/EBook.cpp.i
+.PHONY : src/EBook.i
+
+# target to preprocess a source file
+src/EBook.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/EBook.cpp.i
+.PHONY : src/EBook.cpp.i
+
+src/EBook.s: src/EBook.cpp.s
+.PHONY : src/EBook.s
+
+# target to generate assembly for a file
+src/EBook.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/EBook.cpp.s
+.PHONY : src/EBook.cpp.s
+
 src/ElectronicResource.o: src/ElectronicResource.cpp.o
 .PHONY : src/ElectronicResource.o
 
@@ -432,6 +456,9 @@ help:
 	@echo "... src/Catalog.o"
 	@echo "... src/Catalog.i"
 	@echo "... src/Catalog.s"
+	@echo "... src/EBook.o"
+	@echo "... src/EBook.i"
+	@echo "... src/EBook.s"
 	@echo "... src/ElectronicResource.o"
 	@echo "... src/ElectronicResource.i"
 	@echo "... src/ElectronicResource.s"

@@ -33,6 +33,21 @@ int main() {
     2
 );
 
+catalog.emplace<EBook>(
+    "E001",
+    "Effective Modern C++",
+    std::vector<std::string>{"Scott Meyers"},
+    "978-1491903995",
+    "O'Reilly",
+    2014,
+    Money::of(20),
+    "https://example.com/effective-modern-cpp",
+    FileFormat::EPUB,
+    true,
+    LicenseModel::AnnualSubscription,
+    Money::of(100)
+);
+
     std::cout << "=== Catalog ===\n";
     for (const Resource* r : catalog.all()) std::cout << r->summary() << "\n";
 
@@ -43,11 +58,18 @@ int main() {
     budget.setQuota(ResourceCategory::Journal,
                 {5, Money::of(5000)});
     budget.setQuota(ResourceCategory::ElectronicResource, {40, Money::of(12000)});
+    budget.setQuota(
+    ResourceCategory::EBook,
+    {20, Money::of(3000)}
+);
     
 
     AcquisitionManager acq(catalog, budget);
 
     std::cout << "\n=== Quotes ===\n";
+    std::cout << "5 seats of E001 = "
+          << acq.quote("E001", 5)
+          << "\n";
     std::cout << "5 copies of B002  = " << acq.quote("B002", 5) << "\n";
     std::cout << "20 seats of R001  = " << acq.quote("R001", 20) << "  (incl. platform fee)\n";
 
