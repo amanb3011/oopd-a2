@@ -52,6 +52,33 @@ static void testResourcesAndCost() {
     CHECK_THROWS(b.costFor(0), std::invalid_argument);
     CHECK(joinAuthors(b.authors()) == "A, B and C");
 
+    Book paperback(
+    "BP1",
+    "Paperback Test",
+    {"Author"},
+    "isbn-p",
+    "Publisher",
+    2026,
+    Money::of(100),
+    1,
+    Binding::Paperback
+);
+
+Book hardcover(
+    "BH1",
+    "Hardcover Test",
+    {"Author"},
+    "isbn-h",
+    "Publisher",
+    2026,
+    Money::of(100),
+    1,
+    Binding::Hardcover
+);
+
+CHECK(paperback.costFor(2) == Money::of(200));
+CHECK(hardcover.costFor(2) == Money::of(240));
+
     ElectronicResource e("R1", "DB", "P", 2026, Money::of(10), "url",
                          LicenseModel::AnnualSubscription, Money::of(100));
     CHECK(e.isDigital());

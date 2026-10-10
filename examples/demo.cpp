@@ -71,6 +71,18 @@ catalog.emplace<EBook>(
     2026
     );
 
+    catalog.emplace<Book>(
+    "BHC",
+    "Hardcover Design Book",
+    std::vector<std::string>{"Example Author"},
+    "978-hardcover",
+    "Example Publisher",
+    2026,
+    Money::of(500),
+    1,
+    Binding::Hardcover
+);
+
     std::cout << "=== Catalog ===\n";
     for (const Resource* r : catalog.all()) std::cout << r->summary() << "\n";
 
@@ -105,6 +117,10 @@ catalog.emplace<EBook>(
 
     std::cout << "1 copy of T001 = "
           << acq.quote("T001", 1)
+          << "\n";
+
+    std::cout << "2 hardcover copies of BHC = "
+          << acq.quote("BHC", 2)
           << "\n";
 
     acq.processBatch({
