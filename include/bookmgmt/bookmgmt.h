@@ -8,6 +8,8 @@
 #include "bookmgmt/EBook.h"
 #include "bookmgmt/ElectronicResource.h"
 #include "bookmgmt/Exceptions.h"
+#include "bookmgmt/AudioBook.h"
+#include "bookmgmt/Thesis.h"
 #include "bookmgmt/Journal.h"
 #include "bookmgmt/Money.h"
 #include "bookmgmt/Resource.h"

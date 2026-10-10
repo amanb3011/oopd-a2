@@ -135,6 +135,60 @@ static void testResourcesAndCost() {
     CHECK(ebookOut.str().find("drm protected: yes")
         != std::string::npos);
 
+        AudioBook ab(
+    "A1",
+    "1984 Audiobook",
+    "Penguin",
+    2020,
+    Money::of(30),
+    "https://example.com/1984",
+    "Simon Prebble",
+    660,
+    LicenseModel::AnnualSubscription,
+    Money::of(100)
+);
+
+    CHECK(ab.category() == ResourceCategory::ElectronicResource);
+    CHECK(ab.isDigital());
+    CHECK(ab.narrator() == "Simon Prebble");
+    CHECK(ab.durationMinutes() == 660);
+
+    // ElectronicResource pricing is inherited:
+    // 100 platform fee + 30 * 2 seats = 160
+    CHECK(ab.costFor(2) == Money::of(160));
+
+    std::ostringstream audioOut;
+    audioOut << ab;
+
+    CHECK(audioOut.str().find("narrator: Simon Prebble") != std::string::npos);
+    CHECK(audioOut.str().find("duration minutes: 660") != std::string::npos);
+
+    Thesis thesis(
+        "T1",
+        "Low Power VLSI Design",
+        "IIIT Delhi",
+        "M.Tech",
+        "Dr. Sharma",
+        "IIIT Delhi",
+        2026
+    );
+
+    CHECK(thesis.category() == ResourceCategory::Thesis);
+    CHECK(!thesis.isDigital());
+    CHECK(thesis.university() == "IIIT Delhi");
+    CHECK(thesis.degree() == "M.Tech");
+    CHECK(thesis.supervisor() == "Dr. Sharma");
+
+    // default unit price is zero
+    CHECK(thesis.costFor(1) == Money::of(0));
+
+    std::ostringstream thesisOut;
+    thesisOut << thesis;
+
+    CHECK(thesisOut.str().find("university: IIIT Delhi") != std::string::npos);
+    CHECK(thesisOut.str().find("degree: M.Tech") != std::string::npos);
+    CHECK(thesisOut.str().find("supervisor: Dr. Sharma") != std::string::npos);
+
 }
 
 static void testCatalog() {
@@ -158,8 +212,30 @@ static void testCatalog() {
     false
 );
 
+    c.emplace<AudioBook>(
+    "A1",
+    "Audiobook Test",
+    "Publisher",
+    2025,
+    Money::of(10),
+    "audio-url",
+    "Narrator",
+    300
+);
+
+c.emplace<Thesis>(
+    "T1",
+    "Thesis Test",
+    "IIIT Delhi",
+    "M.Tech",
+    "Supervisor",
+    "IIIT Delhi",
+    2026
+);
+    CHECK(c.byCategory(ResourceCategory::Thesis).size() == 1);
+
     CHECK(c.byCategory(ResourceCategory::EBook).size() == 1);
-    CHECK(c.size() == 4);
+    CHECK(c.size() == 6);
     CHECK(c.contains("B1"));
     CHECK(c.find("nope") == nullptr);
     CHECK_THROWS(c.get("nope"), NotFoundError);
@@ -168,8 +244,8 @@ static void testCatalog() {
                  DuplicateIdError);
 
     CHECK(c.searchTitle("clean").size() == 2);
-    CHECK(c.byCategory(ResourceCategory::ElectronicResource).size() == 1);
-    CHECK(c.where([](const Resource& r) { return r.isDigital(); }).size() == 2);  
+    CHECK(c.byCategory(ResourceCategory::ElectronicResource).size() == 2);
+    CHECK(c.where([](const Resource& r) { return r.isDigital(); }).size() == 3);  
 
     CHECK(c.holdings("B1") == 0);
     c.addHoldings("B1", 3);
@@ -177,7 +253,7 @@ static void testCatalog() {
     CHECK_THROWS(c.addHoldings("B1", -5), std::invalid_argument);
 
     c.remove("R1");
-    CHECK(c.size() == 3);
+    CHECK(c.size() == 5);
     CHECK_THROWS(c.remove("R1"), NotFoundError);
 }
 

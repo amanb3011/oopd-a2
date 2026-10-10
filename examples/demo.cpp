@@ -48,6 +48,29 @@ catalog.emplace<EBook>(
     Money::of(100)
 );
 
+    catalog.emplace<AudioBook>(
+        "A001",
+        "1984 Audiobook",
+        "Penguin",
+        2020,
+        Money::of(30),
+        "https://example.com/1984-audio",
+        "Simon Prebble",
+        660,
+        LicenseModel::AnnualSubscription,
+        Money::of(100)
+    );
+
+    catalog.emplace<Thesis>(
+    "T001",
+    "Low Power VLSI Design",
+    "IIIT Delhi",
+    "M.Tech",
+    "Dr. Sharma",
+    "IIIT Delhi",
+    2026
+    );
+
     std::cout << "=== Catalog ===\n";
     for (const Resource* r : catalog.all()) std::cout << r->summary() << "\n";
 
@@ -61,7 +84,11 @@ catalog.emplace<EBook>(
     budget.setQuota(
     ResourceCategory::EBook,
     {20, Money::of(3000)}
-);
+    );
+    budget.setQuota(
+    ResourceCategory::Thesis,
+    {10, Money::of(1000)}
+    );
     
 
     AcquisitionManager acq(catalog, budget);
@@ -72,6 +99,13 @@ catalog.emplace<EBook>(
           << "\n";
     std::cout << "5 copies of B002  = " << acq.quote("B002", 5) << "\n";
     std::cout << "20 seats of R001  = " << acq.quote("R001", 20) << "  (incl. platform fee)\n";
+    std::cout << "2 seats of A001 = "
+          << acq.quote("A001", 2)
+          << "\n";
+
+    std::cout << "1 copy of T001 = "
+          << acq.quote("T001", 1)
+          << "\n";
 
     acq.processBatch({
         {"B001", 4},   // 1800  ok
