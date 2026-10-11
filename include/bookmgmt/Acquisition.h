@@ -23,9 +23,12 @@ struct PurchaseRecord {
     ResourceCategory category;
     int quantity;
     Money preTaxCost;
-    Money cost;          // post-tax cost
+    Money cost;
     bool approved;
     std::string reason;
+
+    bool cancellation = false;
+    int originalOrderNo = 0;
 };
 class AcquisitionManager {
 public:
@@ -42,6 +45,8 @@ public:
     // True if the purchase would be approved; if not, `reason` explains why.
     bool canPurchase(const std::string& id, int quantity,
                      std::string* reason = nullptr) const;
+
+    const PurchaseRecord& cancel(int orderNo);
     
     const PurchaseRecord& purchase(const std::string& id, int quantity);
 

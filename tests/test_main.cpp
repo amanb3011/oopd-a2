@@ -535,6 +535,54 @@ static void testTitleQuota() {
     CHECK(b.usageFor(ResourceCategory::Book).titles == 2);
 }
 
+static void testCancellation() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "C1",
+        "Cancellation Book",
+        std::vector<std::string>{"Author"},
+        "cancel-isbn",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    Budget b(Money::of(5000));
+
+    b.setQuota(
+        ResourceCategory::Book,
+        {10, Money::of(2000), 2}
+    );
+
+    AcquisitionManager acq(c, b);
+
+    const auto& order = acq.purchase("C1", 3);
+    const int orderNo = order.orderNo;
+
+    CHECK(c.holdings("C1") == 3);
+    CHECK(b.usageFor(ResourceCategory::Book).units == 3);
+    CHECK(b.usageFor(ResourceCategory::Book).titles == 1);
+
+    const auto& cancellation = acq.cancel(orderNo);
+
+    CHECK(cancellation.cancellation);
+    CHECK(cancellation.originalOrderNo == orderNo);
+
+    CHECK(c.holdings("C1") == 0);
+    CHECK(b.usageFor(ResourceCategory::Book).units == 0);
+    CHECK(b.usageFor(ResourceCategory::Book).spent == Money::of(0));
+    CHECK(b.usageFor(ResourceCategory::Book).titles == 0);
+
+    CHECK(acq.history().size() == 2);
+    CHECK(acq.totalSpent() == Money::of(0));
+
+    CHECK_THROWS(
+        acq.cancel(orderNo),
+        std::invalid_argument
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -543,6 +591,7 @@ int main() {
     testAcquisition();
     testTaxes();
     testTitleQuota();
+    testCancellation();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }

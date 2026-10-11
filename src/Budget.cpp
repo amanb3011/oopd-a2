@@ -213,15 +213,47 @@ void Budget::commit(
     u.spent += cost;
 
     if (!resourceId.empty()) {
-        auto& titles = purchasedTitles_[c];
+    auto& titles = purchasedTitles_[c];
+    const auto result = titles.insert(resourceId);
 
-        const auto result = titles.insert(resourceId);
+    if (result.second)
+        ++u.titles;
 
-        if (result.second)
-            ++u.titles;
-    }
-
+    titleUnits_[c][resourceId] += units;
+}
     spent_ += cost;
+}
+
+void Budget::refund(ResourceCategory c, int units, Money cost,
+                    const std::string& resourceId) {
+    Usage& u = usage_[c];
+
+    u.units -= units;
+    u.spent -= cost;
+    spent_ -= cost;
+
+    if (!resourceId.empty()) {
+        auto categoryIt = titleUnits_.find(c);
+
+        if (categoryIt != titleUnits_.end()) {
+            auto titleIt = categoryIt->second.find(resourceId);
+
+            if (titleIt != categoryIt->second.end()) {
+                titleIt->second -= units;
+
+                if (titleIt->second <= 0) {
+                    categoryIt->second.erase(titleIt);
+
+                    auto purchasedIt = purchasedTitles_.find(c);
+
+                    if (purchasedIt != purchasedTitles_.end()) {
+                        if (purchasedIt->second.erase(resourceId) > 0)
+                            --u.titles;
+                    }
+                }
+            }
+        }
+    }
 }
 
 void Budget::print(std::ostream& os) const {

@@ -103,7 +103,7 @@ const PurchaseRecord& AcquisitionManager::purchase(
     quantity,
     postTaxCost,
     id
-);
+    )  ;
 
     catalog_.addHoldings(id, quantity);
 
@@ -116,6 +116,63 @@ const PurchaseRecord& AcquisitionManager::purchase(
         true,
         {}
     );
+}
+
+const PurchaseRecord& AcquisitionManager::cancel(int orderNo) {
+    const PurchaseRecord* original = nullptr;
+
+    for (const auto& rec : history_) {
+        if (rec.orderNo == orderNo) {
+            original = &rec;
+            break;
+        }
+    }
+
+    if (!original)
+        throw std::invalid_argument("order not found");
+
+    if (!original->approved || original->cancellation)
+        throw std::invalid_argument("order cannot be cancelled");
+
+    for (const auto& rec : history_) {
+        if (rec.cancellation && rec.originalOrderNo == orderNo)
+            throw std::invalid_argument("order already cancelled");
+    }
+
+    const std::string resourceId = original->resourceId;
+    const std::string title = original->title;
+    const ResourceCategory category = original->category;
+    const int quantity = original->quantity;
+    const Money preTaxCost = original->preTaxCost;
+    const Money postTaxCost = original->cost;
+
+    budget_.refund(
+        category,
+        quantity,
+        postTaxCost,
+        resourceId
+    );
+
+    catalog_.addHoldings(
+        resourceId,
+        -quantity
+    );
+
+    history_.push_back(PurchaseRecord{
+        nextOrderNo_++,
+        resourceId,
+        title,
+        category,
+        quantity,
+        preTaxCost,
+        postTaxCost,
+        true,
+        "",
+        true,
+        orderNo
+    });
+
+    return history_.back();
 }
 
 std::vector<PurchaseRecord> AcquisitionManager::processBatch(
@@ -172,9 +229,15 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
 Money AcquisitionManager::totalSpent() const {
     Money sum;
 
-    for (const auto& rec : history_)
-        if (rec.approved)
+    for (const auto& rec : history_) {
+        if (!rec.approved)
+            continue;
+
+        if (rec.cancellation)
+            sum -= rec.cost;
+        else
             sum += rec.cost;
+    }
 
     return sum;
 }
@@ -187,7 +250,9 @@ void AcquisitionManager::printReport(std::ostream& os) const {
 
     for (const auto& rec : history_) {
         os << "  #" << std::setw(3) << std::left << rec.orderNo << " "
-           << (rec.approved ? "APPROVED" : "REJECTED") << "  "
+           << (rec.cancellation
+        ? "CANCELLED"
+        : (rec.approved ? "APPROVED" : "REJECTED")) << "  "
            << std::setw(6) << rec.resourceId
            << " x" << std::setw(3) << rec.quantity
            << " pre-tax " << std::setw(10)
@@ -202,9 +267,14 @@ void AcquisitionManager::printReport(std::ostream& os) const {
         os << "\n";
 
         if (rec.approved) {
-            totalPreTax += rec.preTaxCost;
-            totalPostTax += rec.cost;
-        }
+    if (rec.cancellation) {
+        totalPreTax -= rec.preTaxCost;
+        totalPostTax -= rec.cost;
+    } else {
+        totalPreTax += rec.preTaxCost;
+        totalPostTax += rec.cost;
+    }
+}
     }
 
     os << "Total pre-tax: " << totalPreTax << "\n";

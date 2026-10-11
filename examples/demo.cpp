@@ -114,6 +114,13 @@ catalog.emplace<EBook>(
     AcquisitionManager acq(catalog, budget);
     acq.setTaxRates(5, 18);
 
+    const auto& cancelDemoOrder = acq.purchase("BHC", 1);
+
+    std::cout << "\nCancelling order #"
+            << cancelDemoOrder.orderNo
+            << "\n";
+
+    acq.cancel(cancelDemoOrder.orderNo);
     std::cout << "\n=== Quotes ===\n";
     std::cout << "5 seats of E001 = "
           << acq.quote("E001", 5)

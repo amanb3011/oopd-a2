@@ -56,8 +56,12 @@ public:
 
     void print(std::ostream& os) const;
 
+    void refund(ResourceCategory c, int units, Money cost,
+            const std::string& resourceId = "");
+
 private:
     enum class Failure { None, BadInput, Quota, Overall };
+    std::map<ResourceCategory, std::map<std::string, int>> titleUnits_;
     Failure evaluate(ResourceCategory c, int units, Money cost,
                  const std::string& resourceId,
                  std::string& why) const;
