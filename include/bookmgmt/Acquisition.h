@@ -22,14 +22,19 @@ struct PurchaseRecord {
     std::string title;
     ResourceCategory category;
     int quantity;
-    Money cost;
+    Money preTaxCost;
+    Money cost;          // post-tax cost
     bool approved;
-    std::string reason;  // why it was rejected; empty if approved
+    std::string reason;
 };
-
 class AcquisitionManager {
 public:
     AcquisitionManager(Catalog& catalog, Budget& budget);
+
+    void setTaxRates(int printPercent, int electronicPercent);
+
+    int printTaxRate() const { return printTaxPercent_; }
+    int electronicTaxRate() const { return electronicTaxPercent_; }
 
     // Price of a request without buying anything. Throws NotFoundError.
     Money quote(const std::string& id, int quantity) const;
@@ -37,12 +42,15 @@ public:
     // True if the purchase would be approved; if not, `reason` explains why.
     bool canPurchase(const std::string& id, int quantity,
                      std::string* reason = nullptr) const;
+    
+    const PurchaseRecord& purchase(const std::string& id, int quantity);
 
     // Buys immediately. Throws NotFoundError, QuotaExceededError,
     // BudgetExceededError or std::invalid_argument. On success the budget
     // and holdings are updated and the record is added to history.
-    const PurchaseRecord& purchase(const std::string& id, int quantity);
-
+    PurchaseRecord& record(const Resource* r, const std::string& id, int qty,
+                       Money preTaxCost, Money postTaxCost,
+                       bool approved, std::string reason);
     // Processes requests in order; each is approved or rejected on its own
     // (never throws for a rejected request). Every outcome is recorded.
     // EXTENSION POINT: priority ordering, all-or-nothing batches, ...
@@ -58,9 +66,12 @@ private:
                            Money cost, bool approved, std::string reason);
 
     Catalog& catalog_;
+    Money applyTax(const Resource& r, Money preTaxCost) const;
     Budget& budget_;
     std::vector<PurchaseRecord> history_;
     int nextOrderNo_ = 1;
+    int printTaxPercent_ = 0;
+    int electronicTaxPercent_ = 0;
 };
 
 }  // namespace bookmgmt

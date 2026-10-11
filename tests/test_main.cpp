@@ -414,12 +414,75 @@ static void testAcquisition() {
     CHECK(acq.history().size() == 6);
 }
 
+static void testTaxes() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "TB1",
+        "Tax Book",
+        std::vector<std::string>{"Author"},
+        "tax-isbn",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    c.emplace<ElectronicResource>(
+        "TE1",
+        "Tax Electronic",
+        "Publisher",
+        2026,
+        Money::of(100),
+        "url"
+    );
+
+    Budget b(Money::of(10000));
+
+    b.setQuota(
+        ResourceCategory::Book,
+        {10, Money::of(115)}
+    );
+
+    b.setQuota(
+        ResourceCategory::ElectronicResource,
+        {10, Money::of(120)}
+    );
+
+    AcquisitionManager acq(c, b);
+
+    acq.setTaxRates(10, 20);
+
+    CHECK(acq.printTaxRate() == 10);
+    CHECK(acq.electronicTaxRate() == 20);
+
+    CHECK(acq.quote("TB1", 1) == Money::of(110));
+    CHECK(acq.quote("TE1", 1) == Money::of(120));
+
+    const auto& bookOrder = acq.purchase("TB1", 1);
+
+    CHECK(bookOrder.preTaxCost == Money::of(100));
+    CHECK(bookOrder.cost == Money::of(110));
+
+    CHECK(b.usageFor(ResourceCategory::Book).spent == Money::of(110));
+
+    CHECK_THROWS(
+        acq.purchase("TB1", 1),
+        QuotaExceededError
+    );
+
+    CHECK_THROWS(
+        acq.setTaxRates(-1, 20),
+        std::invalid_argument
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
     testCatalog();
     testBudget();
     testAcquisition();
+    testTaxes();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }

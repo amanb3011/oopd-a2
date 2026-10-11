@@ -104,6 +104,7 @@ catalog.emplace<EBook>(
     
 
     AcquisitionManager acq(catalog, budget);
+    acq.setTaxRates(5, 18);
 
     std::cout << "\n=== Quotes ===\n";
     std::cout << "5 seats of E001 = "
