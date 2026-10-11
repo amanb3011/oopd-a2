@@ -476,6 +476,65 @@ static void testTaxes() {
     );
 }
 
+static void testTitleQuota() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "QT1",
+        "Title One",
+        std::vector<std::string>{"Author"},
+        "isbn1",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    c.emplace<Book>(
+        "QT2",
+        "Title Two",
+        std::vector<std::string>{"Author"},
+        "isbn2",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    c.emplace<Book>(
+        "QT3",
+        "Title Three",
+        std::vector<std::string>{"Author"},
+        "isbn3",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    Budget b(Money::of(10000));
+
+    b.setQuota(
+        ResourceCategory::Book,
+        {20, Money::of(5000), 2}
+    );
+
+    AcquisitionManager acq(c, b);
+
+    acq.purchase("QT1", 2);
+    acq.purchase("QT1", 1);
+
+    CHECK(b.usageFor(ResourceCategory::Book).titles == 1);
+
+    acq.purchase("QT2", 1);
+
+    CHECK(b.usageFor(ResourceCategory::Book).titles == 2);
+
+    CHECK_THROWS(
+        acq.purchase("QT3", 1),
+        QuotaExceededError
+    );
+
+    CHECK(b.usageFor(ResourceCategory::Book).titles == 2);
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -483,6 +542,7 @@ int main() {
     testBudget();
     testAcquisition();
     testTaxes();
+    testTitleQuota();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }

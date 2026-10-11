@@ -89,18 +89,26 @@ catalog.emplace<EBook>(
     std::cout << "\n=== Details of R001 ===\n" << catalog.get("R001");
 
     Budget budget(Money::of(20000));
-    budget.setQuota(ResourceCategory::Book, {10, Money::of(8000)});
-    budget.setQuota(ResourceCategory::Journal,
-                {5, Money::of(5000)});
-    budget.setQuota(ResourceCategory::ElectronicResource, {40, Money::of(12000)});
+    budget.setQuota(
+    ResourceCategory::Book,
+    {10, Money::of(8000), 3}
+);
+   budget.setQuota(
+    ResourceCategory::Journal,
+    {5, Money::of(5000), 2}
+);
+   budget.setQuota(
+    ResourceCategory::ElectronicResource,
+    {40, Money::of(12000), 3}
+);
     budget.setQuota(
     ResourceCategory::EBook,
-    {20, Money::of(3000)}
-    );
+    {20, Money::of(3000), 2}
+);
     budget.setQuota(
     ResourceCategory::Thesis,
-    {10, Money::of(1000)}
-    );
+    {10, Money::of(1000), 2}
+);
     
 
     AcquisitionManager acq(catalog, budget);

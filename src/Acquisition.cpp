@@ -51,7 +51,8 @@ bool AcquisitionManager::canPurchase(const std::string& id, int quantity,
             why = budget_.check(
                 r->category(),
                 quantity,
-                postTax
+                postTax,
+                id
             );
         }
     } else {
@@ -98,10 +99,11 @@ const PurchaseRecord& AcquisitionManager::purchase(
     const Money postTaxCost = applyTax(r, preTaxCost);
 
     budget_.commit(
-        r.category(),
-        quantity,
-        postTaxCost
-    );
+    r.category(),
+    quantity,
+    postTaxCost,
+    id
+);
 
     catalog_.addHoldings(id, quantity);
 
@@ -138,10 +140,11 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
             postTaxCost = applyTax(*r, preTaxCost);
 
             why = budget_.check(
-                r->category(),
-                req.quantity,
-                postTaxCost
-            );
+            r->category(),
+            req.quantity,
+            postTaxCost,
+            req.resourceId
+        );
         }
 
         if (why.empty()) {
