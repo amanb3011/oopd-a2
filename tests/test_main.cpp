@@ -216,6 +216,63 @@ CHECK(hardcover.costFor(2) == Money::of(240));
     CHECK(thesisOut.str().find("degree: M.Tech") != std::string::npos);
     CHECK(thesisOut.str().find("supervisor: Dr. Sharma") != std::string::npos);
 
+    Book bulkPaperback(
+    "BP10",
+    "Bulk Paperback",
+    {"Author"},
+    "isbn-bulk-p",
+    "Publisher",
+    2026,
+    Money::of(100),
+    1,
+    Binding::Paperback
+);
+
+CHECK(bulkPaperback.costFor(9) == Money::of(900));
+CHECK(bulkPaperback.costFor(10) == Money::of(900));
+
+Book bulkHardcover(
+    "BH10",
+    "Bulk Hardcover",
+    {"Author"},
+    "isbn-bulk-h",
+    "Publisher",
+    2026,
+    Money::of(100),
+    1,
+    Binding::Hardcover
+);
+
+CHECK(bulkHardcover.costFor(10) == Money::of(1080));
+
+Journal bulkJournal(
+    "J10",
+    "Bulk Journal",
+    "1234-5678",
+    12,
+    "Publisher",
+    2026,
+    Money::of(100),
+    2
+);
+
+CHECK(bulkJournal.costFor(9) == Money::of(1800));
+CHECK(bulkJournal.costFor(10) == Money::of(1800));
+
+ElectronicResource bulkElectronic(
+    "ER50",
+    "Bulk Electronic",
+    "Publisher",
+    2026,
+    Money::of(10),
+    "url",
+    LicenseModel::AnnualSubscription,
+    Money::of(100)
+);
+
+CHECK(bulkElectronic.costFor(50) == Money::of(600));
+CHECK(bulkElectronic.costFor(60) == Money::of(650));
+
 }
 
 static void testCatalog() {

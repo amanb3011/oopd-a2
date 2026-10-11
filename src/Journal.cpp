@@ -21,7 +21,14 @@ Journal::Journal(std::string id, std::string title, std::string issn,
 Money Journal::costFor(int copies) const {
     requirePositive(copies);
 
-    return unitPrice() * copies * subscriptionYears_;
+    Money total = unitPrice() * copies * subscriptionYears_;
+
+    if (copies >= 10) {
+        std::int64_t discount = total.minorUnits() / 10;
+        total = Money::fromMinor(total.minorUnits() - discount);
+    }
+
+    return total;
 }
 
 void Journal::printDetails(std::ostream& os) const {

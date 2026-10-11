@@ -40,7 +40,15 @@ void Resource::requirePositive(int quantity) {
 
 Money Resource::costFor(int quantity) const {
     requirePositive(quantity);
-    return unitPrice_ * quantity;
+
+    Money total = unitPrice() * quantity;
+
+    if (quantity >= 10) {
+        std::int64_t discount = total.minorUnits() / 10;
+        return Money::fromMinor(total.minorUnits() - discount);
+    }
+
+    return total;
 }
 
 void Resource::print(std::ostream& os) const {

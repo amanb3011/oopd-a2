@@ -30,9 +30,16 @@ Money Book::costFor(int quantity) const {
 
     Money total = unitPrice() * quantity;
 
+    // Hardcover costs 20% more.
     if (binding_ == Binding::Hardcover) {
         std::int64_t surcharge = total.minorUnits() / 5;
-        return Money::fromMinor(total.minorUnits() + surcharge);
+        total = Money::fromMinor(total.minorUnits() + surcharge);
+    }
+
+    // Print-item bulk discount: 10% off for 10 or more copies.
+    if (quantity >= 10) {
+        std::int64_t discount = total.minorUnits() / 10;
+        total = Money::fromMinor(total.minorUnits() - discount);
     }
 
     return total;

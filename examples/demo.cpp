@@ -123,6 +123,14 @@ catalog.emplace<EBook>(
           << acq.quote("BHC", 2)
           << "\n";
 
+    std::cout << "10 copies of B001 with bulk discount = "
+          << acq.quote("B001", 10)
+          << "\n";
+
+    std::cout << "60 seats of R001 with seat discount = "
+          << acq.quote("R001", 60)
+          << "\n";
+
     acq.processBatch({
         {"B001", 4},   // 1800  ok
         {"B002", 5},   // 6000  ok  -> book spend 7800
