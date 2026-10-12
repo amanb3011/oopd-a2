@@ -279,38 +279,116 @@ const PurchaseRecord& AcquisitionManager::cancel(int orderNo) {
 }
 
 std::vector<PurchaseRecord> AcquisitionManager::processBatch(
-    const std::vector<PurchaseRequest>& reqs) {
+    const std::vector<PurchaseRequest>& reqs,
+    bool allOrNothing) {
 
     std::vector<PurchaseRecord> results;
     results.reserve(reqs.size());
 
+    if (!allOrNothing) {
+        for (const auto& req : reqs) {
+            const Resource* r = catalog_.find(req.resourceId);
+
+            Money preTaxCost;
+            Money postTaxCost;
+            std::string why;
+
+            if (!r) {
+                why = "resource not found: " + req.resourceId;
+            } else if (req.quantity <= 0) {
+                why = "quantity must be positive";
+            } else {
+                preTaxCost = r->costFor(req.quantity);
+                postTaxCost = applyTax(*r, preTaxCost);
+
+                auto deptIt =
+                    departmentBudgets_.find(req.department);
+
+                if (deptIt != departmentBudgets_.end()) {
+                    why = deptIt->second.check(
+                        r->category(),
+                        req.quantity,
+                        postTaxCost,
+                        req.resourceId
+                    );
+                } else {
+                    why = budget_.check(
+                        r->category(),
+                        req.quantity,
+                        postTaxCost,
+                        req.resourceId
+                    );
+                }
+            }
+
+            if (why.empty()) {
+                results.push_back(
+                    purchase(
+                        req.resourceId,
+                        req.quantity,
+                        req.department
+                    )
+                );
+            } else {
+                results.push_back(
+                    record(
+                        r,
+                        req.resourceId,
+                        req.quantity,
+                        preTaxCost,
+                        postTaxCost,
+                        false,
+                        why,
+                        req.department
+                    )
+                );
+            }
+        }
+
+        return results;
+    }
+
+    // All-or-nothing mode:
+    // validate the complete batch using temporary budget copies first.
+    Budget tempFallback = budget_;
+    auto tempDepartments = departmentBudgets_;
+
+    std::string batchFailure;
+
     for (const auto& req : reqs) {
         const Resource* r = catalog_.find(req.resourceId);
 
-        Money preTaxCost;
-        Money postTaxCost;
-        std::string why;
-
         if (!r) {
-            why = "resource not found: " + req.resourceId;
-        } else if (req.quantity <= 0) {
-            why = "quantity must be positive";
-        } else {
-            preTaxCost = r->costFor(req.quantity);
-            postTaxCost = applyTax(*r, preTaxCost);
+            batchFailure =
+                "resource not found: " + req.resourceId;
+            break;
+        }
 
+        if (req.quantity <= 0) {
+            batchFailure =
+                "quantity must be positive";
+            break;
+        }
+
+        const Money preTaxCost =
+            r->costFor(req.quantity);
+
+        const Money postTaxCost =
+            applyTax(*r, preTaxCost);
+
+        try {
             auto deptIt =
-                departmentBudgets_.find(req.department);
+                tempDepartments.find(req.department);
 
-            if (deptIt != departmentBudgets_.end()) {
-                why = deptIt->second.check(
+            if (deptIt != tempDepartments.end()) {
+                deptIt->second.commit(
                     r->category(),
                     req.quantity,
                     postTaxCost,
                     req.resourceId
                 );
             } else {
-                why = budget_.check(
+                tempFallback.commit(
                     r->category(),
                     req.quantity,
                     postTaxCost,
@@ -318,16 +396,28 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
                 );
             }
         }
+        catch (const std::exception& e) {
+            batchFailure = e.what();
+            break;
+        }
+    }
 
-        if (why.empty()) {
-            results.push_back(
-                purchase(
-                    req.resourceId,
-                    req.quantity,
-                    req.department
-                )
-            );
-        } else {
+    if (!batchFailure.empty()) {
+        for (const auto& req : reqs) {
+            const Resource* r =
+                catalog_.find(req.resourceId);
+
+            Money preTaxCost;
+            Money postTaxCost;
+
+            if (r && req.quantity > 0) {
+                preTaxCost =
+                    r->costFor(req.quantity);
+
+                postTaxCost =
+                    applyTax(*r, preTaxCost);
+            }
+
             results.push_back(
                 record(
                     r,
@@ -336,11 +426,23 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
                     preTaxCost,
                     postTaxCost,
                     false,
-                    why,
+                    "batch rejected: " + batchFailure,
                     req.department
                 )
             );
         }
+
+        return results;
+    }
+
+    for (const auto& req : reqs) {
+        results.push_back(
+            purchase(
+                req.resourceId,
+                req.quantity,
+                req.department
+            )
+        );
     }
 
     return results;

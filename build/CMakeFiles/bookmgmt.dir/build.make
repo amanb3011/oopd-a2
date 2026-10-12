@@ -114,19 +114,19 @@ CMakeFiles/bookmgmt.dir/src/Book.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/Book.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/Book.cpp -o CMakeFiles/bookmgmt.dir/src/Book.cpp.s
 
-CMakeFiles/bookmgmt.dir/src/Journal.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
-CMakeFiles/bookmgmt.dir/src/Journal.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/Journal.cpp
-CMakeFiles/bookmgmt.dir/src/Journal.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/bookmgmt.dir/src/Journal.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/Journal.cpp.o -MF CMakeFiles/bookmgmt.dir/src/Journal.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/Journal.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/Journal.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
+CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Journal.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o -MF CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Journal.cpp
 
-CMakeFiles/bookmgmt.dir/src/Journal.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/Journal.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/Journal.cpp > CMakeFiles/bookmgmt.dir/src/Journal.cpp.i
+CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Journal.cpp > CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.i
 
-CMakeFiles/bookmgmt.dir/src/Journal.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/Journal.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/Journal.cpp -o CMakeFiles/bookmgmt.dir/src/Journal.cpp.s
+CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Journal.cpp -o CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.s
 
 CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
 CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/ElectronicResource.cpp
@@ -142,19 +142,19 @@ CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/ElectronicResource.cpp -o CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.s
 
-CMakeFiles/bookmgmt.dir/src/EBook.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
-CMakeFiles/bookmgmt.dir/src/EBook.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp
-CMakeFiles/bookmgmt.dir/src/EBook.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/bookmgmt.dir/src/EBook.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/EBook.cpp.o -MF CMakeFiles/bookmgmt.dir/src/EBook.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/EBook.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
+CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_EBook.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o -MF CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_EBook.cpp
 
-CMakeFiles/bookmgmt.dir/src/EBook.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/EBook.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp > CMakeFiles/bookmgmt.dir/src/EBook.cpp.i
+CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_EBook.cpp > CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.i
 
-CMakeFiles/bookmgmt.dir/src/EBook.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/EBook.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp -o CMakeFiles/bookmgmt.dir/src/EBook.cpp.s
+CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_EBook.cpp -o CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.s
 
 CMakeFiles/bookmgmt.dir/src/Budget.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
 CMakeFiles/bookmgmt.dir/src/Budget.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/Budget.cpp
@@ -170,33 +170,33 @@ CMakeFiles/bookmgmt.dir/src/Budget.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/Budget.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/Budget.cpp -o CMakeFiles/bookmgmt.dir/src/Budget.cpp.s
 
-CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
-CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/AudioBook.cpp
-CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o -MF CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/AudioBook.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
+CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_AudioBook.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o -MF CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_AudioBook.cpp
 
-CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/AudioBook.cpp > CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.i
+CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_AudioBook.cpp > CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.i
 
-CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/AudioBook.cpp -o CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.s
+CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_AudioBook.cpp -o CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.s
 
-CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
-CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/Thesis.cpp
-CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o -MF CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/Thesis.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
+CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Thesis.cpp
+CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o: CMakeFiles/bookmgmt.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o -MF CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o.d -o CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o -c /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Thesis.cpp
 
-CMakeFiles/bookmgmt.dir/src/Thesis.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/Thesis.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/Thesis.cpp > CMakeFiles/bookmgmt.dir/src/Thesis.cpp.i
+CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Thesis.cpp > CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.i
 
-CMakeFiles/bookmgmt.dir/src/Thesis.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/Thesis.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/Thesis.cpp -o CMakeFiles/bookmgmt.dir/src/Thesis.cpp.s
+CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Thesis.cpp -o CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.s
 
 CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o: CMakeFiles/bookmgmt.dir/flags.make
 CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o: /Users/apple/Desktop/Assignments/BookManagement/src/Catalog.cpp
@@ -231,12 +231,12 @@ bookmgmt_OBJECTS = \
 "CMakeFiles/bookmgmt.dir/src/Money.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Resource.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Book.cpp.o" \
-"CMakeFiles/bookmgmt.dir/src/Journal.cpp.o" \
+"CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o" \
-"CMakeFiles/bookmgmt.dir/src/EBook.cpp.o" \
+"CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Budget.cpp.o" \
-"CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o" \
-"CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o" \
+"CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o" \
+"CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o" \
 "CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o"
 
@@ -246,12 +246,12 @@ bookmgmt_EXTERNAL_OBJECTS =
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Money.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Resource.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Book.cpp.o
-libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Journal.cpp.o
+libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o
-libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/EBook.cpp.o
+libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Budget.cpp.o
-libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o
-libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o
+libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o
+libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o
 libbookmgmt.a: CMakeFiles/bookmgmt.dir/build.make

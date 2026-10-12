@@ -9,16 +9,16 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/apple/Desktop/Assignments/BookManagement/src/Acquisition.cpp" "CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.o.d"
-  "/Users/apple/Desktop/Assignments/BookManagement/src/AudioBook.cpp" "CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Book.cpp" "CMakeFiles/bookmgmt.dir/src/Book.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Book.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Budget.cpp" "CMakeFiles/bookmgmt.dir/src/Budget.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Budget.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Catalog.cpp" "CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o.d"
-  "/Users/apple/Desktop/Assignments/BookManagement/src/EBook.cpp" "CMakeFiles/bookmgmt.dir/src/EBook.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/EBook.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/ElectronicResource.cpp" "CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.o.d"
-  "/Users/apple/Desktop/Assignments/BookManagement/src/Journal.cpp" "CMakeFiles/bookmgmt.dir/src/Journal.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Journal.cpp.o.d"
+  "/Users/apple/Desktop/Assignments/BookManagement/src/MT26151_AudioBook.cpp" "CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o.d"
+  "/Users/apple/Desktop/Assignments/BookManagement/src/MT26151_EBook.cpp" "CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o.d"
+  "/Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Journal.cpp" "CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o.d"
+  "/Users/apple/Desktop/Assignments/BookManagement/src/MT26151_Thesis.cpp" "CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Money.cpp" "CMakeFiles/bookmgmt.dir/src/Money.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Money.cpp.o.d"
   "/Users/apple/Desktop/Assignments/BookManagement/src/Resource.cpp" "CMakeFiles/bookmgmt.dir/src/Resource.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Resource.cpp.o.d"
-  "/Users/apple/Desktop/Assignments/BookManagement/src/Thesis.cpp" "CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o" "gcc" "CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -704,6 +704,77 @@ static void testBudgetRollover() {
     );
 }
 
+static void testAllOrNothingBatch() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "AB1",
+        "Batch Book One",
+        std::vector<std::string>{"Author"},
+        "batch-1",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    c.emplace<Book>(
+        "AB2",
+        "Batch Book Two",
+        std::vector<std::string>{"Author"},
+        "batch-2",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    Budget b(Money::of(1000));
+
+    b.setQuota(
+        ResourceCategory::Book,
+        {3, Money::of(1000), 5}
+    );
+
+    AcquisitionManager acq(c, b);
+
+    std::vector<PurchaseRequest> badBatch = {
+        {"AB1", 2},
+        {"AB2", 2}
+    };
+
+    auto rejected =
+        acq.processBatch(badBatch, true);
+
+    CHECK(rejected.size() == 2);
+    CHECK(!rejected[0].approved);
+    CHECK(!rejected[1].approved);
+
+    CHECK(c.holdings("AB1") == 0);
+    CHECK(c.holdings("AB2") == 0);
+
+    CHECK(
+        b.usageFor(ResourceCategory::Book).units == 0
+    );
+
+    std::vector<PurchaseRequest> goodBatch = {
+        {"AB1", 1},
+        {"AB2", 2}
+    };
+
+    auto approved =
+        acq.processBatch(goodBatch, true);
+
+    CHECK(approved.size() == 2);
+    CHECK(approved[0].approved);
+    CHECK(approved[1].approved);
+
+    CHECK(c.holdings("AB1") == 1);
+    CHECK(c.holdings("AB2") == 2);
+
+    CHECK(
+        b.usageFor(ResourceCategory::Book).units == 3
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -715,6 +786,7 @@ int main() {
     testCancellation();
     testDepartmentBudgets();
     testBudgetRollover();
+    testAllOrNothingBatch();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }

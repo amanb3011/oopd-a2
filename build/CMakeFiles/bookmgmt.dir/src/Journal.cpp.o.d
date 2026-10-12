@@ -1,7 +1,7 @@
 CMakeFiles/bookmgmt.dir/src/Journal.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.json \
   /Users/apple/Desktop/Assignments/BookManagement/src/Journal.cpp \
-  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Journal.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Journal.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/string \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/max.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/comp.h \

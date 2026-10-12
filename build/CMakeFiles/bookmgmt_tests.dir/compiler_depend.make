@@ -833,31 +833,25 @@ CMakeFiles/bookmgmt_tests.dir/tests/test_main.cpp.o: /Users/apple/Desktop/Assign
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stdint.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Acquisition.h \
-  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/AudioBook.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Book.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Budget.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Catalog.h \
-  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/EBook.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/ElectronicResource.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Exceptions.h \
-  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Journal.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_AudioBook.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_EBook.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Journal.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Thesis.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Money.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Resource.h \
-  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Thesis.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/bookmgmt.h
 
 
 /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/bookmgmt.h:
 
-/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Thesis.h:
-
-/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Journal.h:
-
-/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/EBook.h:
+/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Journal.h:
 
 /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Book.h:
-
-/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/AudioBook.h:
 
 /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Acquisition.h:
 
@@ -1517,6 +1511,8 @@ CMakeFiles/bookmgmt_tests.dir/tests/test_main.cpp.o: /Users/apple/Desktop/Assign
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__ostream/basic_ostream.h:
 
+/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_EBook.h:
+
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__node_handle:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__new/nothrow_t.h:
@@ -1792,6 +1788,8 @@ CMakeFiles/bookmgmt_tests.dir/tests/test_main.cpp.o: /Users/apple/Desktop/Assign
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/boyer_moore_searcher.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__fwd/array.h:
+
+/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Thesis.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/weak_result_type.h:
 
@@ -2512,6 +2510,8 @@ CMakeFiles/bookmgmt_tests.dir/tests/test_main.cpp.o: /Users/apple/Desktop/Assign
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__iterator/static_bounded_iter.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/unordered_map:
+
+/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_AudioBook.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/partial_sort_copy.h:
 

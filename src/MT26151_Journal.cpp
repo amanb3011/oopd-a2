@@ -1,4 +1,7 @@
-#include "bookmgmt/Journal.h"
+// Roll No: MT26151
+// Name: Aman Bhandari
+
+#include "bookmgmt/MT26151_Journal.h"
 
 #include <ostream>
 #include <stdexcept>

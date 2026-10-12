@@ -213,30 +213,6 @@ src/Acquisition.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Acquisition.cpp.s
 .PHONY : src/Acquisition.cpp.s
 
-src/AudioBook.o: src/AudioBook.cpp.o
-.PHONY : src/AudioBook.o
-
-# target to build an object file
-src/AudioBook.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.o
-.PHONY : src/AudioBook.cpp.o
-
-src/AudioBook.i: src/AudioBook.cpp.i
-.PHONY : src/AudioBook.i
-
-# target to preprocess a source file
-src/AudioBook.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.i
-.PHONY : src/AudioBook.cpp.i
-
-src/AudioBook.s: src/AudioBook.cpp.s
-.PHONY : src/AudioBook.s
-
-# target to generate assembly for a file
-src/AudioBook.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/AudioBook.cpp.s
-.PHONY : src/AudioBook.cpp.s
-
 src/Book.o: src/Book.cpp.o
 .PHONY : src/Book.o
 
@@ -309,30 +285,6 @@ src/Catalog.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Catalog.cpp.s
 .PHONY : src/Catalog.cpp.s
 
-src/EBook.o: src/EBook.cpp.o
-.PHONY : src/EBook.o
-
-# target to build an object file
-src/EBook.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/EBook.cpp.o
-.PHONY : src/EBook.cpp.o
-
-src/EBook.i: src/EBook.cpp.i
-.PHONY : src/EBook.i
-
-# target to preprocess a source file
-src/EBook.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/EBook.cpp.i
-.PHONY : src/EBook.cpp.i
-
-src/EBook.s: src/EBook.cpp.s
-.PHONY : src/EBook.s
-
-# target to generate assembly for a file
-src/EBook.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/EBook.cpp.s
-.PHONY : src/EBook.cpp.s
-
 src/ElectronicResource.o: src/ElectronicResource.cpp.o
 .PHONY : src/ElectronicResource.o
 
@@ -357,29 +309,101 @@ src/ElectronicResource.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/ElectronicResource.cpp.s
 .PHONY : src/ElectronicResource.cpp.s
 
-src/Journal.o: src/Journal.cpp.o
-.PHONY : src/Journal.o
+src/MT26151_AudioBook.o: src/MT26151_AudioBook.cpp.o
+.PHONY : src/MT26151_AudioBook.o
 
 # target to build an object file
-src/Journal.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Journal.cpp.o
-.PHONY : src/Journal.cpp.o
+src/MT26151_AudioBook.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.o
+.PHONY : src/MT26151_AudioBook.cpp.o
 
-src/Journal.i: src/Journal.cpp.i
-.PHONY : src/Journal.i
+src/MT26151_AudioBook.i: src/MT26151_AudioBook.cpp.i
+.PHONY : src/MT26151_AudioBook.i
 
 # target to preprocess a source file
-src/Journal.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Journal.cpp.i
-.PHONY : src/Journal.cpp.i
+src/MT26151_AudioBook.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.i
+.PHONY : src/MT26151_AudioBook.cpp.i
 
-src/Journal.s: src/Journal.cpp.s
-.PHONY : src/Journal.s
+src/MT26151_AudioBook.s: src/MT26151_AudioBook.cpp.s
+.PHONY : src/MT26151_AudioBook.s
 
 # target to generate assembly for a file
-src/Journal.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Journal.cpp.s
-.PHONY : src/Journal.cpp.s
+src/MT26151_AudioBook.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_AudioBook.cpp.s
+.PHONY : src/MT26151_AudioBook.cpp.s
+
+src/MT26151_EBook.o: src/MT26151_EBook.cpp.o
+.PHONY : src/MT26151_EBook.o
+
+# target to build an object file
+src/MT26151_EBook.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.o
+.PHONY : src/MT26151_EBook.cpp.o
+
+src/MT26151_EBook.i: src/MT26151_EBook.cpp.i
+.PHONY : src/MT26151_EBook.i
+
+# target to preprocess a source file
+src/MT26151_EBook.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.i
+.PHONY : src/MT26151_EBook.cpp.i
+
+src/MT26151_EBook.s: src/MT26151_EBook.cpp.s
+.PHONY : src/MT26151_EBook.s
+
+# target to generate assembly for a file
+src/MT26151_EBook.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_EBook.cpp.s
+.PHONY : src/MT26151_EBook.cpp.s
+
+src/MT26151_Journal.o: src/MT26151_Journal.cpp.o
+.PHONY : src/MT26151_Journal.o
+
+# target to build an object file
+src/MT26151_Journal.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.o
+.PHONY : src/MT26151_Journal.cpp.o
+
+src/MT26151_Journal.i: src/MT26151_Journal.cpp.i
+.PHONY : src/MT26151_Journal.i
+
+# target to preprocess a source file
+src/MT26151_Journal.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.i
+.PHONY : src/MT26151_Journal.cpp.i
+
+src/MT26151_Journal.s: src/MT26151_Journal.cpp.s
+.PHONY : src/MT26151_Journal.s
+
+# target to generate assembly for a file
+src/MT26151_Journal.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_Journal.cpp.s
+.PHONY : src/MT26151_Journal.cpp.s
+
+src/MT26151_Thesis.o: src/MT26151_Thesis.cpp.o
+.PHONY : src/MT26151_Thesis.o
+
+# target to build an object file
+src/MT26151_Thesis.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.o
+.PHONY : src/MT26151_Thesis.cpp.o
+
+src/MT26151_Thesis.i: src/MT26151_Thesis.cpp.i
+.PHONY : src/MT26151_Thesis.i
+
+# target to preprocess a source file
+src/MT26151_Thesis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.i
+.PHONY : src/MT26151_Thesis.cpp.i
+
+src/MT26151_Thesis.s: src/MT26151_Thesis.cpp.s
+.PHONY : src/MT26151_Thesis.s
+
+# target to generate assembly for a file
+src/MT26151_Thesis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/MT26151_Thesis.cpp.s
+.PHONY : src/MT26151_Thesis.cpp.s
 
 src/Money.o: src/Money.cpp.o
 .PHONY : src/Money.o
@@ -429,30 +453,6 @@ src/Resource.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Resource.cpp.s
 .PHONY : src/Resource.cpp.s
 
-src/Thesis.o: src/Thesis.cpp.o
-.PHONY : src/Thesis.o
-
-# target to build an object file
-src/Thesis.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Thesis.cpp.o
-.PHONY : src/Thesis.cpp.o
-
-src/Thesis.i: src/Thesis.cpp.i
-.PHONY : src/Thesis.i
-
-# target to preprocess a source file
-src/Thesis.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Thesis.cpp.i
-.PHONY : src/Thesis.cpp.i
-
-src/Thesis.s: src/Thesis.cpp.s
-.PHONY : src/Thesis.s
-
-# target to generate assembly for a file
-src/Thesis.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bookmgmt.dir/build.make CMakeFiles/bookmgmt.dir/src/Thesis.cpp.s
-.PHONY : src/Thesis.cpp.s
-
 tests/test_main.o: tests/test_main.cpp.o
 .PHONY : tests/test_main.o
 
@@ -495,9 +495,6 @@ help:
 	@echo "... src/Acquisition.o"
 	@echo "... src/Acquisition.i"
 	@echo "... src/Acquisition.s"
-	@echo "... src/AudioBook.o"
-	@echo "... src/AudioBook.i"
-	@echo "... src/AudioBook.s"
 	@echo "... src/Book.o"
 	@echo "... src/Book.i"
 	@echo "... src/Book.s"
@@ -507,24 +504,27 @@ help:
 	@echo "... src/Catalog.o"
 	@echo "... src/Catalog.i"
 	@echo "... src/Catalog.s"
-	@echo "... src/EBook.o"
-	@echo "... src/EBook.i"
-	@echo "... src/EBook.s"
 	@echo "... src/ElectronicResource.o"
 	@echo "... src/ElectronicResource.i"
 	@echo "... src/ElectronicResource.s"
-	@echo "... src/Journal.o"
-	@echo "... src/Journal.i"
-	@echo "... src/Journal.s"
+	@echo "... src/MT26151_AudioBook.o"
+	@echo "... src/MT26151_AudioBook.i"
+	@echo "... src/MT26151_AudioBook.s"
+	@echo "... src/MT26151_EBook.o"
+	@echo "... src/MT26151_EBook.i"
+	@echo "... src/MT26151_EBook.s"
+	@echo "... src/MT26151_Journal.o"
+	@echo "... src/MT26151_Journal.i"
+	@echo "... src/MT26151_Journal.s"
+	@echo "... src/MT26151_Thesis.o"
+	@echo "... src/MT26151_Thesis.i"
+	@echo "... src/MT26151_Thesis.s"
 	@echo "... src/Money.o"
 	@echo "... src/Money.i"
 	@echo "... src/Money.s"
 	@echo "... src/Resource.o"
 	@echo "... src/Resource.i"
 	@echo "... src/Resource.s"
-	@echo "... src/Thesis.o"
-	@echo "... src/Thesis.i"
-	@echo "... src/Thesis.s"
 	@echo "... tests/test_main.o"
 	@echo "... tests/test_main.i"
 	@echo "... tests/test_main.s"

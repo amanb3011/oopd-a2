@@ -9,12 +9,12 @@ add_library(bookmgmt
     src/Money.cpp
     src/Resource.cpp
     src/Book.cpp
-    src/Journal.cpp
+    src/MT26151_Journal.cpp
     src/ElectronicResource.cpp
-    src/EBook.cpp
+    src/MT26151_EBook.cpp
     src/Budget.cpp
-    src/AudioBook.cpp
-    src/Thesis.cpp
+    src/MT26151_AudioBook.cpp
+    src/MT26151_Thesis.cpp
     src/Catalog.cpp
     src/Acquisition.cpp
 )
