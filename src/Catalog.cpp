@@ -193,4 +193,126 @@ std::vector<const Resource*> Catalog::searchYearRange(
     return results;
 }
 
+void Catalog::borrowPrint(
+    const std::string& resourceId,
+    const std::string& patronId) {
+
+    const Resource& r = get(resourceId);
+
+    if (r.isDigital())
+        throw std::invalid_argument(
+            "cannot borrow a digital resource as a print copy"
+        );
+
+    auto& patrons = borrowers_[resourceId];
+
+    if (patrons.find(patronId) != patrons.end())
+        throw std::invalid_argument(
+            "patron already borrowed this resource"
+        );
+
+    if (static_cast<int>(patrons.size()) >= holdings(resourceId))
+        throw std::invalid_argument(
+            "no print copies available"
+        );
+
+    patrons.insert(patronId);
+}
+
+void Catalog::returnPrint(
+    const std::string& resourceId,
+    const std::string& patronId) {
+
+    const Resource& r = get(resourceId);
+
+    if (r.isDigital())
+        throw std::invalid_argument(
+            "cannot return a digital resource as a print copy"
+        );
+
+    auto it = borrowers_.find(resourceId);
+
+    if (it == borrowers_.end() ||
+        it->second.erase(patronId) == 0) {
+
+        throw std::invalid_argument(
+            "patron has not borrowed this resource"
+        );
+    }
+}
+
+void Catalog::openSession(
+    const std::string& resourceId,
+    const std::string& patronId) {
+
+    const Resource& r = get(resourceId);
+
+    if (!r.isDigital())
+        throw std::invalid_argument(
+            "sessions are only supported for digital resources"
+        );
+
+    auto& patrons = sessions_[resourceId];
+
+    if (patrons.find(patronId) != patrons.end())
+        throw std::invalid_argument(
+            "patron already has an active session"
+        );
+
+    if (static_cast<int>(patrons.size()) >= holdings(resourceId))
+        throw std::invalid_argument(
+            "no electronic seats available"
+        );
+
+    patrons.insert(patronId);
+}
+
+void Catalog::closeSession(
+    const std::string& resourceId,
+    const std::string& patronId) {
+
+    const Resource& r = get(resourceId);
+
+    if (!r.isDigital())
+        throw std::invalid_argument(
+            "sessions are only supported for digital resources"
+        );
+
+    auto it = sessions_.find(resourceId);
+
+    if (it == sessions_.end() ||
+        it->second.erase(patronId) == 0) {
+
+        throw std::invalid_argument(
+            "patron has no active session"
+        );
+    }
+}
+
+int Catalog::borrowedCount(
+    const std::string& resourceId) const {
+
+    auto it = borrowers_.find(resourceId);
+
+    if (it == borrowers_.end())
+        return 0;
+
+    return static_cast<int>(
+        it->second.size()
+    );
+}
+
+int Catalog::activeSessions(
+    const std::string& resourceId) const {
+
+    auto it = sessions_.find(resourceId);
+
+    if (it == sessions_.end())
+        return 0;
+
+    return static_cast<int>(
+        it->second.size()
+    );
+}
+
 }  // namespace bookmgmt

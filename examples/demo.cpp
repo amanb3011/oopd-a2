@@ -391,5 +391,24 @@ int main() {
             << "\n";
     }
 
+    std::cout << "\n=== Lending Demo ===\n";
+
+    catalog.borrowPrint("B001", "student1");
+
+    std::cout
+        << "B001 borrowed copies: "
+        << catalog.borrowedCount("B001")
+        << "\n";
+
+    catalog.returnPrint("B001", "student1");
+
+    catalog.openSession("R001", "student1");
+
+    std::cout
+        << "R001 active sessions: "
+        << catalog.activeSessions("R001")
+        << "\n";
+
+    catalog.closeSession("R001", "student1");
     return 0;
 }

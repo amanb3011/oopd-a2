@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <set>
 
 #include "bookmgmt/Resource.h"
 
@@ -59,12 +60,42 @@ public:
         int toYear
     ) const;
 
+        void borrowPrint(
+        const std::string& resourceId,
+        const std::string& patronId
+    );
+
+    void returnPrint(
+        const std::string& resourceId,
+        const std::string& patronId
+    );
+
+    void openSession(
+        const std::string& resourceId,
+        const std::string& patronId
+    );
+
+    void closeSession(
+        const std::string& resourceId,
+        const std::string& patronId
+    );
+
+    int borrowedCount(
+        const std::string& resourceId
+    ) const;
+
+    int activeSessions(
+        const std::string& resourceId
+    ) const;
+
 private:
     struct Entry {
         std::unique_ptr<Resource> resource;
         int holdings = 0;
     };
     std::map<std::string, Entry> items_;
+    std::map<std::string, std::set<std::string>> borrowers_;
+    std::map<std::string, std::set<std::string>> sessions_;
 };
 
 }  // namespace bookmgmt

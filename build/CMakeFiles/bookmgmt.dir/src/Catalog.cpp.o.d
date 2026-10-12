@@ -811,6 +811,7 @@ CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/map \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__tree \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/lazy_synth_three_way_comparator.h \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/set \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Resource.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Money.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Book.h \

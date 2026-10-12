@@ -920,6 +920,78 @@ static void testCatalogSearches() {
     );
 }
 
+static void testLending() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "LB1",
+        "Lending Book",
+        std::vector<std::string>{"Author"},
+        "lend-isbn",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    c.emplace<ElectronicResource>(
+        "LE1",
+        "Lending Electronic",
+        "Publisher",
+        2026,
+        Money::of(50),
+        "url"
+    );
+
+    c.addHoldings("LB1", 2);
+    c.addHoldings("LE1", 2);
+
+    c.borrowPrint("LB1", "P1");
+    c.borrowPrint("LB1", "P2");
+
+    CHECK(c.borrowedCount("LB1") == 2);
+
+    CHECK_THROWS(
+        c.borrowPrint("LB1", "P3"),
+        std::invalid_argument
+    );
+
+    c.returnPrint("LB1", "P1");
+
+    CHECK(c.borrowedCount("LB1") == 1);
+
+    c.borrowPrint("LB1", "P3");
+
+    CHECK(c.borrowedCount("LB1") == 2);
+
+    CHECK_THROWS(
+        c.borrowPrint("LE1", "P4"),
+        std::invalid_argument
+    );
+
+    c.openSession("LE1", "P1");
+    c.openSession("LE1", "P2");
+
+    CHECK(c.activeSessions("LE1") == 2);
+
+    CHECK_THROWS(
+        c.openSession("LE1", "P3"),
+        std::invalid_argument
+    );
+
+    c.closeSession("LE1", "P1");
+
+    CHECK(c.activeSessions("LE1") == 1);
+
+    c.openSession("LE1", "P3");
+
+    CHECK(c.activeSessions("LE1") == 2);
+
+    CHECK_THROWS(
+        c.openSession("LB1", "P4"),
+        std::invalid_argument
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -934,6 +1006,7 @@ int main() {
     testAllOrNothingBatch();
     testVendors();
     testCatalogSearches();
+    testLending();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }
