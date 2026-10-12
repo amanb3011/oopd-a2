@@ -192,6 +192,23 @@ int main() {
     // Print = 5%, electronic = 18%
     acq.setTaxRates(5, 18);
 
+            acq.addVendor(
+            "B001",
+            "University Books",
+            Money::of(430)
+        );
+
+        acq.addVendor(
+            "B001",
+            "Campus Store",
+            Money::of(400)
+        );
+
+        acq.addVendor(
+            "B001",
+            "Academic Supplier",
+            Money::of(420)
+        );
     // Cancellation demo
     const auto& cancelDemoOrder =
         acq.purchase(

@@ -26,6 +26,70 @@ const char* departmentName(Department d) {
 AcquisitionManager::AcquisitionManager(Catalog& catalog, Budget& budget)
     : catalog_(catalog), budget_(budget) {}
 
+void AcquisitionManager::addVendor(
+    const std::string& resourceId,
+    const std::string& vendor,
+    Money unitPrice) {
+
+    if (!catalog_.contains(resourceId))
+        throw std::invalid_argument("resource not found: " + resourceId);
+
+    if (vendor.empty())
+        throw std::invalid_argument("vendor name must not be empty");
+
+    if (unitPrice.isNegative())
+        throw std::invalid_argument("vendor price must not be negative");
+
+    vendors_[resourceId].push_back(VendorOffer{vendor, unitPrice});
+}
+
+const VendorOffer* AcquisitionManager::cheapestVendor(
+    const std::string& resourceId) const {
+
+    auto it = vendors_.find(resourceId);
+
+    if (it == vendors_.end() || it->second.empty())
+        return nullptr;
+
+    const VendorOffer* cheapest = &it->second.front();
+
+    for (const auto& offer : it->second) {
+        if (offer.unitPrice < cheapest->unitPrice)
+            cheapest = &offer;
+    }
+
+    return cheapest;
+}
+
+Money AcquisitionManager::vendorCost(
+    const Resource& r,
+    const VendorOffer* vendor,
+    int quantity) const {
+
+    if (!vendor)
+        return r.costFor(quantity);
+
+    if (quantity <= 0)
+        throw std::invalid_argument("quantity must be positive");
+
+    Money total = vendor->unitPrice * quantity;
+
+    if (!r.isDigital() && quantity >= 10) {
+        const std::int64_t discount = total.minorUnits() / 10;
+        total = Money::fromMinor(total.minorUnits() - discount);
+    }
+
+    if (r.isDigital() && quantity > 50) {
+        const std::int64_t price = vendor->unitPrice.minorUnits();
+        const std::int64_t first50 = price * 50;
+        const std::int64_t extra = (price * (quantity - 50)) / 2;
+
+        total = Money::fromMinor(first50 + extra);
+    }
+
+    return total;
+}
+
 void AcquisitionManager::setDepartmentBudget(
     Department d,
     Budget budget) {
@@ -51,9 +115,14 @@ const Budget& AcquisitionManager::departmentBudget(Department d) const {
     return it->second;
 }
 
-Money AcquisitionManager::quote(const std::string& id, int quantity) const {
+Money AcquisitionManager::quote(
+    const std::string& id,
+    int quantity) const {
+
     const Resource& r = catalog_.get(id);
-    const Money preTax = r.costFor(quantity);
+    const VendorOffer* vendor = cheapestVendor(id);
+    const Money preTax = vendorCost(r, vendor, quantity);
+
     return applyTax(r, preTax);
 }
 
@@ -73,16 +142,12 @@ Money AcquisitionManager::applyTax(
     Money preTaxCost) const {
 
     const int rate =
-        r.isDigital()
-            ? electronicTaxPercent_
-            : printTaxPercent_;
+        r.isDigital() ? electronicTaxPercent_ : printTaxPercent_;
 
     const std::int64_t tax =
         (preTaxCost.minorUnits() * rate) / 100;
 
-    return Money::fromMinor(
-        preTaxCost.minorUnits() + tax
-    );
+    return Money::fromMinor(preTaxCost.minorUnits() + tax);
 }
 
 bool AcquisitionManager::canPurchase(
@@ -113,7 +178,8 @@ bool AcquisitionManager::canPurchase(
     } else if (quantity <= 0) {
         why = "quantity must be positive";
     } else {
-        const Money preTax = r->costFor(quantity);
+        const VendorOffer* vendor = cheapestVendor(id);
+        const Money preTax = vendorCost(*r, vendor, quantity);
         const Money postTax = applyTax(*r, preTax);
 
         auto deptIt = departmentBudgets_.find(department);
@@ -151,6 +217,9 @@ PurchaseRecord& AcquisitionManager::record(
     std::string reason,
     Department department) {
 
+    const VendorOffer* offer =
+        r ? cheapestVendor(id) : nullptr;
+
     history_.push_back(PurchaseRecord{
         nextOrderNo_++,
         id,
@@ -163,7 +232,8 @@ PurchaseRecord& AcquisitionManager::record(
         std::move(reason),
         false,
         0,
-        department
+        department,
+        offer ? offer->vendor : std::string("")
     });
 
     return history_.back();
@@ -176,7 +246,8 @@ const PurchaseRecord& AcquisitionManager::purchase(
 
     const Resource& r = catalog_.get(id);
 
-    const Money preTaxCost = r.costFor(quantity);
+    const VendorOffer* vendor = cheapestVendor(id);
+    const Money preTaxCost = vendorCost(r, vendor, quantity);
     const Money postTaxCost = applyTax(r, preTaxCost);
 
     auto deptIt = departmentBudgets_.find(department);
@@ -239,6 +310,7 @@ const PurchaseRecord& AcquisitionManager::cancel(int orderNo) {
     const Money preTaxCost = original->preTaxCost;
     const Money postTaxCost = original->cost;
     const Department department = original->department;
+    const std::string vendor = original->vendor;
 
     auto deptIt = departmentBudgets_.find(department);
 
@@ -272,7 +344,8 @@ const PurchaseRecord& AcquisitionManager::cancel(int orderNo) {
         "",
         true,
         orderNo,
-        department
+        department,
+        vendor
     });
 
     return history_.back();
@@ -298,8 +371,14 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
             } else if (req.quantity <= 0) {
                 why = "quantity must be positive";
             } else {
-                preTaxCost = r->costFor(req.quantity);
-                postTaxCost = applyTax(*r, preTaxCost);
+                const VendorOffer* vendor =
+                    cheapestVendor(req.resourceId);
+
+                preTaxCost =
+                    vendorCost(*r, vendor, req.quantity);
+
+                postTaxCost =
+                    applyTax(*r, preTaxCost);
 
                 auto deptIt =
                     departmentBudgets_.find(req.department);
@@ -348,11 +427,8 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
         return results;
     }
 
-    // All-or-nothing mode:
-    // validate the complete batch using temporary budget copies first.
     Budget tempFallback = budget_;
     auto tempDepartments = departmentBudgets_;
-
     std::string batchFailure;
 
     for (const auto& req : reqs) {
@@ -365,13 +441,15 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
         }
 
         if (req.quantity <= 0) {
-            batchFailure =
-                "quantity must be positive";
+            batchFailure = "quantity must be positive";
             break;
         }
 
+        const VendorOffer* vendor =
+            cheapestVendor(req.resourceId);
+
         const Money preTaxCost =
-            r->costFor(req.quantity);
+            vendorCost(*r, vendor, req.quantity);
 
         const Money postTaxCost =
             applyTax(*r, preTaxCost);
@@ -411,8 +489,11 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
             Money postTaxCost;
 
             if (r && req.quantity > 0) {
+                const VendorOffer* vendor =
+                    cheapestVendor(req.resourceId);
+
                 preTaxCost =
-                    r->costFor(req.quantity);
+                    vendorCost(*r, vendor, req.quantity);
 
                 postTaxCost =
                     applyTax(*r, preTaxCost);
@@ -497,6 +578,10 @@ void AcquisitionManager::printReport(std::ostream& os) const {
            << rec.title
            << "  dept: "
            << departmentName(rec.department);
+
+        if (!rec.vendor.empty()) {
+            os << "  vendor: " << rec.vendor;
+        }
 
         if (!rec.approved)
             os << "\n        reason: " << rec.reason;

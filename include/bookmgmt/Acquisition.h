@@ -20,6 +20,11 @@ enum class Department {
 
 const char* departmentName(Department d);
 
+struct VendorOffer {
+    std::string vendor;
+    Money unitPrice;
+};
+
 struct PurchaseRequest {
     std::string resourceId;
     int quantity;
@@ -40,12 +45,20 @@ struct PurchaseRecord {
     bool cancellation = false;
     int originalOrderNo = 0;
     Department department = Department::ComputerScience;
+    std::string vendor;
 };
 class AcquisitionManager {
 public:
     AcquisitionManager(Catalog& catalog, Budget& budget);
 
     void setTaxRates(int printPercent, int electronicPercent);
+
+    void addVendor(
+    const std::string& resourceId,
+    const std::string& vendor,
+    Money unitPrice
+    );
+
 
     int printTaxRate() const { return printTaxPercent_; }
     int electronicTaxRate() const { return electronicTaxPercent_; }
@@ -117,6 +130,17 @@ private:
     int nextOrderNo_ = 1;
     int printTaxPercent_ = 0;
     int electronicTaxPercent_ = 0;
+    std::map<std::string, std::vector<VendorOffer>> vendors_;
+
+    const VendorOffer* cheapestVendor(
+        const std::string& resourceId
+    ) const;
+
+    Money vendorCost(
+        const Resource& r,
+        const VendorOffer* vendor,
+        int quantity
+    ) const;
 };
 
 }  // namespace bookmgmt

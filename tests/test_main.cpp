@@ -775,6 +775,70 @@ static void testAllOrNothingBatch() {
     );
 }
 
+static void testVendors() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "V1",
+        "Vendor Book",
+        std::vector<std::string>{"Author"},
+        "vendor-isbn",
+        "Publisher",
+        2026,
+        Money::of(500)
+    );
+
+    Budget b(Money::of(10000));
+
+    b.setQuota(
+        ResourceCategory::Book,
+        {20, Money::of(10000), 5}
+    );
+
+    AcquisitionManager acq(c, b);
+
+    acq.addVendor(
+        "V1",
+        "Vendor A",
+        Money::of(450)
+    );
+
+    acq.addVendor(
+        "V1",
+        "Vendor B",
+        Money::of(400)
+    );
+
+    acq.addVendor(
+        "V1",
+        "Vendor C",
+        Money::of(425)
+    );
+
+    CHECK(
+        acq.quote("V1", 2) ==
+        Money::of(800)
+    );
+
+    const auto& order =
+        acq.purchase("V1", 2);
+
+    CHECK(order.vendor == "Vendor B");
+    CHECK(order.preTaxCost == Money::of(800));
+    CHECK(order.cost == Money::of(800));
+
+    CHECK(c.holdings("V1") == 2);
+
+    CHECK_THROWS(
+        acq.addVendor(
+            "NOPE",
+            "Vendor",
+            Money::of(100)
+        ),
+        std::invalid_argument
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -787,6 +851,7 @@ int main() {
     testDepartmentBudgets();
     testBudgetRollover();
     testAllOrNothingBatch();
+    testVendors();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }
