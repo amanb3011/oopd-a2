@@ -10,41 +10,95 @@ namespace bookmgmt {
 
 class Money {
 public:
-    constexpr Money() = default;
+    Money() = default;
 
-    // Construct from minor units: Money::fromMinor(12550) == 125.50
-    static constexpr Money fromMinor(std::int64_t minor) { return Money(minor); }
-    // Construct from major + minor parts: Money::of(125, 50) == 125.50
-    static Money of(std::int64_t major, int minor = 0);
+    // Construct from minor units.
+    static Money fromMinor(
+        std::int64_t minor,
+        std::string currency = "INR"
+    ) {
+        return Money(minor, std::move(currency));
+    }
 
-    constexpr std::int64_t minorUnits() const { return minor_; }
-    double toDouble() const { return static_cast<double>(minor_) / 100.0; }
-    std::string toString() const;  // "1234.50" / "-3.05"
+    // Construct from major + minor parts.
+    static Money of(
+        std::int64_t major,
+        int minor = 0,
+        std::string currency = "INR"
+    );
 
-    constexpr bool isZero() const { return minor_ == 0; }
-    constexpr bool isNegative() const { return minor_ < 0; }
+    std::int64_t minorUnits() const {
+        return minor_;
+    }
 
-    Money& operator+=(Money o) { minor_ += o.minor_; return *this; }
-    Money& operator-=(Money o) { minor_ -= o.minor_; return *this; }
-    Money& operator*=(std::int64_t k) { minor_ *= k; return *this; }
+    double toDouble() const {
+        return static_cast<double>(minor_) / 100.0;
+    }
 
-    friend Money operator+(Money a, Money b) { return a += b; }
-    friend Money operator-(Money a, Money b) { return a -= b; }
-    friend Money operator*(Money a, std::int64_t k) { return a *= k; }
-    friend Money operator*(std::int64_t k, Money a) { return a *= k; }
+    const std::string& currency() const {
+        return currency_;
+    }
 
-    friend constexpr bool operator==(Money a, Money b) { return a.minor_ == b.minor_; }
-    friend constexpr bool operator!=(Money a, Money b) { return a.minor_ != b.minor_; }
-    friend constexpr bool operator<(Money a, Money b) { return a.minor_ < b.minor_; }
-    friend constexpr bool operator<=(Money a, Money b) { return a.minor_ <= b.minor_; }
-    friend constexpr bool operator>(Money a, Money b) { return a.minor_ > b.minor_; }
-    friend constexpr bool operator>=(Money a, Money b) { return a.minor_ >= b.minor_; }
+    std::string toString() const;
+
+    bool isZero() const {
+        return minor_ == 0;
+    }
+
+    bool isNegative() const {
+        return minor_ < 0;
+    }
+
+    Money& operator+=(const Money& o);
+    Money& operator-=(const Money& o);
+
+    Money& operator*=(std::int64_t k) {
+        minor_ *= k;
+        return *this;
+    }
+
+    friend Money operator+(Money a, const Money& b) {
+        return a += b;
+    }
+
+    friend Money operator-(Money a, const Money& b) {
+        return a -= b;
+    }
+
+    friend Money operator*(Money a, std::int64_t k) {
+        return a *= k;
+    }
+
+    friend Money operator*(std::int64_t k, Money a) {
+        return a *= k;
+    }
+
+    friend bool operator==(const Money& a, const Money& b);
+    friend bool operator!=(const Money& a, const Money& b);
+    friend bool operator<(const Money& a, const Money& b);
+    friend bool operator<=(const Money& a, const Money& b);
+    friend bool operator>(const Money& a, const Money& b);
+    friend bool operator>=(const Money& a, const Money& b);
 
 private:
-    explicit constexpr Money(std::int64_t minor) : minor_(minor) {}
+    Money(
+        std::int64_t minor,
+        std::string currency
+    )
+        : minor_(minor),
+          currency_(std::move(currency)) {}
+
+    void requireSameCurrency(
+        const Money& other
+    ) const;
+
     std::int64_t minor_ = 0;
+    std::string currency_ = "INR";
 };
 
-std::ostream& operator<<(std::ostream& os, Money m);
+std::ostream& operator<<(
+    std::ostream& os,
+    const Money& m
+);
 
 }  // namespace bookmgmt

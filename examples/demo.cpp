@@ -410,5 +410,39 @@ int main() {
         << "\n";
 
     catalog.closeSession("R001", "student1");
+
+    std::cout << "\n=== Currency Demo ===\n";
+
+    Money inr =
+        Money::of(100, 0, "INR");
+
+    Money usd =
+        Money::of(100, 0, "USD");
+
+    std::cout
+        << "INR amount: "
+        << inr
+        << " "
+        << inr.currency()
+        << "\n";
+
+    std::cout
+        << "USD amount: "
+        << usd
+        << " "
+        << usd.currency()
+        << "\n";
+
+    try {
+        Money invalid = inr + usd;
+        std::cout << invalid << "\n";
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout
+            << "Currency error: "
+            << e.what()
+            << "\n";
+    }
+
     return 0;
 }

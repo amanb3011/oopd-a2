@@ -992,6 +992,59 @@ static void testLending() {
     );
 }
 
+static void testMoneyCurrencies() {
+    Money inrA =
+        Money::of(100, 0, "INR");
+
+    Money inrB =
+        Money::of(50, 0, "INR");
+
+    Money usd =
+        Money::of(100, 0, "USD");
+
+    CHECK(inrA.currency() == "INR");
+    CHECK(usd.currency() == "USD");
+
+    CHECK(
+        inrA + inrB ==
+        Money::of(150, 0, "INR")
+    );
+
+    CHECK(
+        inrA - inrB ==
+        Money::of(50, 0, "INR")
+    );
+
+    CHECK(
+        inrA > inrB
+    );
+
+    CHECK_THROWS(
+        inrA + usd,
+        std::invalid_argument
+    );
+
+    CHECK_THROWS(
+        inrA - usd,
+        std::invalid_argument
+    );
+
+    CHECK_THROWS(
+        inrA == usd,
+        std::invalid_argument
+    );
+
+    CHECK_THROWS(
+        inrA < usd,
+        std::invalid_argument
+    );
+
+    CHECK_THROWS(
+        inrA > usd,
+        std::invalid_argument
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -1007,6 +1060,7 @@ int main() {
     testVendors();
     testCatalogSearches();
     testLending();
+    testMoneyCurrencies();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }
