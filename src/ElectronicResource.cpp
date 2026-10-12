@@ -23,6 +23,15 @@ ElectronicResource::ElectronicResource(std::string id, std::string title,
       platformFee_(platformFee) {
     if (platformFee_.isNegative())
         throw std::invalid_argument("platform fee must not be negative");
+
+    if (platformFee_.isZero() &&
+        platformFee_.currency() != unitPrice().currency()) {
+        platformFee_ = Money::fromMinor(0, unitPrice().currency());
+    } else if (platformFee_.currency() != unitPrice().currency()) {
+        throw std::invalid_argument(
+            "platform fee currency must match seat price currency"
+        );
+    }
 }
 
 Money ElectronicResource::costFor(int seats) const {
@@ -38,7 +47,8 @@ Money ElectronicResource::costFor(int seats) const {
         (unitPrice().minorUnits() * halfPriceSeats) / 2;
 
     return Money::fromMinor(
-        platformFee_.minorUnits() + seatCost
+        platformFee_.minorUnits() + seatCost,
+        unitPrice().currency()
     );
 }
 
@@ -65,9 +75,16 @@ Money ElectronicResource::costForWithUnitPrice(
         (unitPrice.minorUnits() *
          halfPriceSeats) / 2;
 
+    if (unitPrice.currency() != platformFee_.currency()) {
+        throw std::invalid_argument(
+            "vendor price currency must match resource currency"
+        );
+    }
+
     return Money::fromMinor(
         platformFee_.minorUnits() +
-        seatCost
+        seatCost,
+        unitPrice.currency()
     );
 }
 

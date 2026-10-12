@@ -28,7 +28,7 @@ Money Journal::costFor(int copies) const {
 
     if (copies >= 10) {
         std::int64_t discount = total.minorUnits() / 10;
-        total = Money::fromMinor(total.minorUnits() - discount);
+        total = Money::fromMinor(total.minorUnits() - discount, total.currency());
     }
 
     return total;
@@ -51,7 +51,8 @@ Money Journal::costForWithUnitPrice(
     if (copies >= 10) {
         total = Money::fromMinor(
             total.minorUnits() -
-            total.minorUnits() / 10
+            total.minorUnits() / 10,
+            total.currency()
         );
     }
 

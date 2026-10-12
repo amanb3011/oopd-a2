@@ -154,6 +154,33 @@ int main() {
 
     AcquisitionManager acq(catalog, budget);
 
+    // Title-limit demo
+    std::cout << "\n=== Title Quota Demo ===\n";
+
+    Budget titleDemoBudget(Money::of(1000));
+    titleDemoBudget.setQuota(
+        ResourceCategory::Book,
+        {10, Money::of(1000), 1}
+    );
+    titleDemoBudget.commit(
+        ResourceCategory::Book,
+        1,
+        Money::of(100),
+        "B001"
+    );
+
+    try {
+        titleDemoBudget.commit(
+            ResourceCategory::Book,
+            1,
+            Money::of(100),
+            "B002"
+        );
+    }
+    catch (const QuotaExceededError& e) {
+        std::cout << "Title quota enforced: " << e.what() << "\n";
+    }
+
     // Department budgets
     Budget csBudget(Money::of(10000));
 

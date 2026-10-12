@@ -45,7 +45,7 @@ Money Resource::costFor(int quantity) const {
 
     if (quantity >= 10) {
         std::int64_t discount = total.minorUnits() / 10;
-        return Money::fromMinor(total.minorUnits() - discount);
+        return Money::fromMinor(total.minorUnits() - discount, total.currency());
     }
 
     return total;
@@ -62,7 +62,8 @@ Money Resource::costForWithUnitPrice(
     if (quantity >= 10) {
         total = Money::fromMinor(
             total.minorUnits() -
-            total.minorUnits() / 10
+            total.minorUnits() / 10,
+            total.currency()
         );
     }
 

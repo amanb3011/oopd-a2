@@ -22,7 +22,9 @@ const ResourceCategory kAllCategories[] = {
 
 }  // namespace
 
-Budget::Budget(Money total) : total_(total) {
+Budget::Budget(Money total)
+    : total_(total),
+      spent_(Money::fromMinor(0, total.currency())) {
     if (total_.isNegative())
         throw std::invalid_argument("budget must not be negative");
 }
@@ -33,6 +35,9 @@ void Budget::setQuota(ResourceCategory c, Quota q) {
 
     if (q.maxTitles < -1)
         throw std::invalid_argument("title quota must be -1 or non-negative");
+
+    if (q.maxSpend.currency() != total_.currency())
+        throw std::invalid_argument("quota currency must match budget currency");
 
     quotas_[c] = q;
 }
@@ -54,7 +59,7 @@ Usage Budget::usageFor(ResourceCategory c) const {
     auto it = usage_.find(c);
 
     return it == usage_.end()
-        ? Usage{}
+        ? Usage{0, Money::fromMinor(0, total_.currency()), 0}
         : it->second;
 }
 
@@ -208,7 +213,10 @@ void Budget::commit(
             throw BudgetExceededError(why);
     }
 
-    Usage& u = usage_[c];
+    Usage& u = usage_.try_emplace(
+        c,
+        Usage{0, Money::fromMinor(0, total_.currency()), 0}
+    ).first->second;
 
     u.units += units;
     u.spent += cost;
@@ -227,7 +235,10 @@ void Budget::commit(
 
 void Budget::refund(ResourceCategory c, int units, Money cost,
                     const std::string& resourceId) {
-    Usage& u = usage_[c];
+    Usage& u = usage_.try_emplace(
+        c,
+        Usage{0, Money::fromMinor(0, total_.currency()), 0}
+    ).first->second;
 
     u.units -= units;
     u.spent -= cost;
@@ -267,7 +278,7 @@ Budget Budget::rollover(int carryPercent) const {
         (unspent.minorUnits() * carryPercent) / 100;
 
     Budget nextYear(
-        Money::fromMinor(total_.minorUnits() + carriedMinor)
+        Money::fromMinor(total_.minorUnits() + carriedMinor, total_.currency())
     );
 
     for (const auto& entry : quotas_) {

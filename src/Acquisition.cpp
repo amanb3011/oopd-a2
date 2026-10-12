@@ -40,6 +40,11 @@ void AcquisitionManager::addVendor(
     if (unitPrice.isNegative())
         throw std::invalid_argument("vendor price must not be negative");
 
+    if (unitPrice.currency() != catalog_.get(resourceId).unitPrice().currency())
+        throw std::invalid_argument(
+            "vendor price currency must match resource currency"
+        );
+
     vendors_[resourceId].push_back(VendorOffer{vendor, unitPrice});
 }
 
@@ -78,6 +83,11 @@ Money AcquisitionManager::vendorCost(
 void AcquisitionManager::setDepartmentBudget(
     Department d,
     Budget budget) {
+
+    if (budget.total().currency() != budget_.total().currency())
+        throw std::invalid_argument(
+            "department budget currency must match acquisition budget currency"
+        );
 
     departmentBudgets_.insert_or_assign(d, std::move(budget));
 }
@@ -132,7 +142,10 @@ Money AcquisitionManager::applyTax(
     const std::int64_t tax =
         (preTaxCost.minorUnits() * rate) / 100;
 
-    return Money::fromMinor(preTaxCost.minorUnits() + tax);
+    return Money::fromMinor(
+        preTaxCost.minorUnits() + tax,
+        preTaxCost.currency()
+    );
 }
 
 bool AcquisitionManager::canPurchase(
@@ -515,7 +528,7 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
 }
 
 Money AcquisitionManager::totalSpent() const {
-    Money sum;
+    Money sum = Money::fromMinor(0, budget_.total().currency());
 
     for (const auto& rec : history_) {
         if (!rec.approved)
@@ -533,8 +546,10 @@ Money AcquisitionManager::totalSpent() const {
 void AcquisitionManager::printReport(std::ostream& os) const {
     os << "Order history (" << history_.size() << " orders)\n";
 
-    Money totalPreTax;
-    Money totalPostTax;
+    Money totalPreTax =
+        Money::fromMinor(0, budget_.total().currency());
+    Money totalPostTax =
+        Money::fromMinor(0, budget_.total().currency());
 
     for (const auto& rec : history_) {
         os << "  #"

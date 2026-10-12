@@ -1043,6 +1043,35 @@ static void testMoneyCurrencies() {
     assertThrows<std::invalid_argument>([&]() {
         (void)(inrA > usd);
     });
+
+    Book usdHardcover(
+        "USD-B", "USD Book", {"Author"}, "usd-isbn", "Publisher",
+        2026, Money::of(100, 0, "USD"), 1, Binding::Hardcover
+    );
+    Money usdBookCost = usdHardcover.costFor(1);
+    assert(usdBookCost == Money::of(120, 0, "USD"));
+    assert(usdBookCost.currency() == "USD");
+
+    ElectronicResource usdElectronic(
+        "USD-E", "USD Electronic", "Publisher", 2026,
+        Money::of(10, 0, "USD"), "url"
+    );
+    Money usdElectronicCost = usdElectronic.costFor(2);
+    assert(usdElectronicCost == Money::of(20, 0, "USD"));
+
+    Budget usdBudget(Money::of(1000, 0, "USD"));
+    usdBudget.setQuota(
+        ResourceCategory::Book,
+        {10, Money::of(500, 0, "USD")}
+    );
+    usdBudget.commit(
+        ResourceCategory::Book,
+        1,
+        Money::of(100, 0, "USD"),
+        "USD-B"
+    );
+    assert(usdBudget.spent() == Money::of(100, 0, "USD"));
+    assert(usdBudget.rollover(50).total().currency() == "USD");
 }
 
 int main() {
