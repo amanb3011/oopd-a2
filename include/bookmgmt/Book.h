@@ -22,6 +22,10 @@ public:
 
     ResourceCategory category() const override { return ResourceCategory::Book; }
     Money costFor(int quantity) const override;
+    Money costForWithUnitPrice(
+    int quantity,
+    Money unitPrice
+    ) const override;
 
 protected:
     void printDetails(std::ostream& os) const override;

@@ -34,6 +34,30 @@ Money Journal::costFor(int copies) const {
     return total;
 }
 
+Money Journal::costForWithUnitPrice(
+    int copies,
+    Money unitPrice) const {
+
+    if (copies <= 0)
+        throw std::invalid_argument(
+            "quantity must be positive"
+        );
+
+    Money total =
+        unitPrice *
+        copies *
+        subscriptionYears_;
+
+    if (copies >= 10) {
+        total = Money::fromMinor(
+            total.minorUnits() -
+            total.minorUnits() / 10
+        );
+    }
+
+    return total;
+}
+
 void Journal::printDetails(std::ostream& os) const {
     os << "  issn: " << issn_ << "\n"
        << "  issues per year: " << issuesPerYear_ << "\n"

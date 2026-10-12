@@ -69,25 +69,10 @@ Money AcquisitionManager::vendorCost(
     if (!vendor)
         return r.costFor(quantity);
 
-    if (quantity <= 0)
-        throw std::invalid_argument("quantity must be positive");
-
-    Money total = vendor->unitPrice * quantity;
-
-    if (!r.isDigital() && quantity >= 10) {
-        const std::int64_t discount = total.minorUnits() / 10;
-        total = Money::fromMinor(total.minorUnits() - discount);
-    }
-
-    if (r.isDigital() && quantity > 50) {
-        const std::int64_t price = vendor->unitPrice.minorUnits();
-        const std::int64_t first50 = price * 50;
-        const std::int64_t extra = (price * (quantity - 50)) / 2;
-
-        total = Money::fromMinor(first50 + extra);
-    }
-
-    return total;
+    return r.costForWithUnitPrice(
+        quantity,
+        vendor->unitPrice
+    );
 }
 
 void AcquisitionManager::setDepartmentBudget(

@@ -45,6 +45,11 @@ public:
     // EXTENSION POINT: override for discounts, fees, tiered pricing, ...
     virtual Money costFor(int quantity) const;
 
+    virtual Money costForWithUnitPrice(
+    int quantity,
+    Money unitPrice
+    ) const;
+
     // Writes a multi-line human-readable description.
     void print(std::ostream& os) const;
     // Single-line summary, e.g. "[Book] B001  Clean Code (2008)  @ 450.00".

@@ -27,6 +27,10 @@ public:
     }
     bool isDigital() const override { return true; }
     Money costFor(int seats) const override;
+    Money costForWithUnitPrice(
+    int seats,
+    Money unitPrice
+    ) const override;
 
 protected:
     void printDetails(std::ostream& os) const override;

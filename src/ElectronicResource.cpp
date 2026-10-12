@@ -42,6 +42,35 @@ Money ElectronicResource::costFor(int seats) const {
     );
 }
 
+Money ElectronicResource::costForWithUnitPrice(
+    int seats,
+    Money unitPrice) const {
+
+    if (seats <= 0)
+        throw std::invalid_argument(
+            "quantity must be positive"
+        );
+
+    const int fullPriceSeats =
+        seats > 50 ? 50 : seats;
+
+    const int halfPriceSeats =
+        seats > 50 ? seats - 50 : 0;
+
+    std::int64_t seatCost =
+        unitPrice.minorUnits() *
+        fullPriceSeats;
+
+    seatCost +=
+        (unitPrice.minorUnits() *
+         halfPriceSeats) / 2;
+
+    return Money::fromMinor(
+        platformFee_.minorUnits() +
+        seatCost
+    );
+}
+
 void ElectronicResource::printDetails(std::ostream& os) const {
     os << "  access url: " << accessUrl_ << "\n"
        << "  license: " << licenseName(license_) << "\n"

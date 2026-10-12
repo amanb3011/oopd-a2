@@ -45,6 +45,34 @@ Money Book::costFor(int quantity) const {
     return total;
 }
 
+Money Book::costForWithUnitPrice(
+    int quantity,
+    Money unitPrice) const {
+
+    if (quantity <= 0)
+        throw std::invalid_argument(
+            "quantity must be positive"
+        );
+
+    Money total = unitPrice * quantity;
+
+    if (binding_ == Binding::Hardcover) {
+        total = Money::fromMinor(
+            total.minorUnits() +
+            total.minorUnits() / 5
+        );
+    }
+
+    if (quantity >= 10) {
+        total = Money::fromMinor(
+            total.minorUnits() -
+            total.minorUnits() / 10
+        );
+    }
+
+    return total;
+}
+
 void Book::printDetails(std::ostream& os) const {
     os << "  authors: " << joinAuthors(authors_) << "\n"
        << "  isbn: " << isbn_ << "\n"

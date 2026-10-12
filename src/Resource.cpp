@@ -51,6 +51,24 @@ Money Resource::costFor(int quantity) const {
     return total;
 }
 
+Money Resource::costForWithUnitPrice(
+    int quantity,
+    Money unitPrice) const {
+
+    requirePositive(quantity);
+
+    Money total = unitPrice * quantity;
+
+    if (quantity >= 10) {
+        total = Money::fromMinor(
+            total.minorUnits() -
+            total.minorUnits() / 10
+        );
+    }
+
+    return total;
+}
+
 void Resource::print(std::ostream& os) const {
     os << categoryName(category()) << " " << id_ << "\n"
        << "  title: " << title_ << "\n"
