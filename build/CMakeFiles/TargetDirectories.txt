@@ -1,6 +1,0 @@
-/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles/bookmgmt.dir
-/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles/demo.dir
-/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles/bookmgmt_tests.dir
-/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles/test.dir
-/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles/edit_cache.dir
-/Users/apple/Desktop/Assignments/BookManagement/build/CMakeFiles/rebuild_cache.dir
