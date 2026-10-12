@@ -1,16 +1,55 @@
 #include "bookmgmt/Acquisition.h"
 
+#include <cstdint>
 #include <iomanip>
 #include <ostream>
 #include <stdexcept>
-#include <cstdint>
+#include <utility>
 
 #include "bookmgmt/Exceptions.h"
 
 namespace bookmgmt {
 
+const char* departmentName(Department d) {
+    switch (d) {
+        case Department::ComputerScience:
+            return "Computer Science";
+        case Department::Physics:
+            return "Physics";
+        case Department::ElectricalEngineering:
+            return "Electrical Engineering";
+    }
+
+    return "Unknown";
+}
+
 AcquisitionManager::AcquisitionManager(Catalog& catalog, Budget& budget)
     : catalog_(catalog), budget_(budget) {}
+
+void AcquisitionManager::setDepartmentBudget(
+    Department d,
+    Budget budget) {
+
+    departmentBudgets_.insert_or_assign(d, std::move(budget));
+}
+
+Budget& AcquisitionManager::departmentBudget(Department d) {
+    auto it = departmentBudgets_.find(d);
+
+    if (it == departmentBudgets_.end())
+        throw std::invalid_argument("department budget not found");
+
+    return it->second;
+}
+
+const Budget& AcquisitionManager::departmentBudget(Department d) const {
+    auto it = departmentBudgets_.find(d);
+
+    if (it == departmentBudgets_.end())
+        throw std::invalid_argument("department budget not found");
+
+    return it->second;
+}
 
 Money AcquisitionManager::quote(const std::string& id, int quantity) const {
     const Resource& r = catalog_.get(id);
@@ -18,7 +57,10 @@ Money AcquisitionManager::quote(const std::string& id, int quantity) const {
     return applyTax(r, preTax);
 }
 
-void AcquisitionManager::setTaxRates(int printPercent, int electronicPercent) {
+void AcquisitionManager::setTaxRates(
+    int printPercent,
+    int electronicPercent) {
+
     if (printPercent < 0 || electronicPercent < 0)
         throw std::invalid_argument("tax rate must not be negative");
 
@@ -26,28 +68,64 @@ void AcquisitionManager::setTaxRates(int printPercent, int electronicPercent) {
     electronicTaxPercent_ = electronicPercent;
 }
 
-Money AcquisitionManager::applyTax(const Resource& r, Money preTaxCost) const {
-    const int rate = r.isDigital()
-        ? electronicTaxPercent_
-        : printTaxPercent_;
+Money AcquisitionManager::applyTax(
+    const Resource& r,
+    Money preTaxCost) const {
+
+    const int rate =
+        r.isDigital()
+            ? electronicTaxPercent_
+            : printTaxPercent_;
 
     const std::int64_t tax =
         (preTaxCost.minorUnits() * rate) / 100;
 
-    return Money::fromMinor(preTaxCost.minorUnits() + tax);
+    return Money::fromMinor(
+        preTaxCost.minorUnits() + tax
+    );
 }
 
-bool AcquisitionManager::canPurchase(const std::string& id, int quantity,
-                                     std::string* reason) const {
+bool AcquisitionManager::canPurchase(
+    const std::string& id,
+    int quantity,
+    std::string* reason) const {
+
+    return canPurchase(
+        id,
+        quantity,
+        Department::ComputerScience,
+        reason
+    );
+}
+
+bool AcquisitionManager::canPurchase(
+    const std::string& id,
+    int quantity,
+    Department department,
+    std::string* reason) const {
+
     std::string why;
 
-    if (const Resource* r = catalog_.find(id)) {
-        if (quantity <= 0) {
-            why = "quantity must be positive";
-        } else {
-            const Money preTax = r->costFor(quantity);
-            const Money postTax = applyTax(*r, preTax);
+    const Resource* r = catalog_.find(id);
 
+    if (!r) {
+        why = "resource not found: " + id;
+    } else if (quantity <= 0) {
+        why = "quantity must be positive";
+    } else {
+        const Money preTax = r->costFor(quantity);
+        const Money postTax = applyTax(*r, preTax);
+
+        auto deptIt = departmentBudgets_.find(department);
+
+        if (deptIt != departmentBudgets_.end()) {
+            why = deptIt->second.check(
+                r->category(),
+                quantity,
+                postTax,
+                id
+            );
+        } else {
             why = budget_.check(
                 r->category(),
                 quantity,
@@ -55,8 +133,6 @@ bool AcquisitionManager::canPurchase(const std::string& id, int quantity,
                 id
             );
         }
-    } else {
-        why = "resource not found: " + id;
     }
 
     if (reason)
@@ -72,7 +148,8 @@ PurchaseRecord& AcquisitionManager::record(
     Money preTaxCost,
     Money postTaxCost,
     bool approved,
-    std::string reason) {
+    std::string reason,
+    Department department) {
 
     history_.push_back(PurchaseRecord{
         nextOrderNo_++,
@@ -83,7 +160,10 @@ PurchaseRecord& AcquisitionManager::record(
         preTaxCost,
         postTaxCost,
         approved,
-        std::move(reason)
+        std::move(reason),
+        false,
+        0,
+        department
     });
 
     return history_.back();
@@ -91,19 +171,31 @@ PurchaseRecord& AcquisitionManager::record(
 
 const PurchaseRecord& AcquisitionManager::purchase(
     const std::string& id,
-    int quantity) {
+    int quantity,
+    Department department) {
 
     const Resource& r = catalog_.get(id);
 
     const Money preTaxCost = r.costFor(quantity);
     const Money postTaxCost = applyTax(r, preTaxCost);
 
-    budget_.commit(
-    r.category(),
-    quantity,
-    postTaxCost,
-    id
-    )  ;
+    auto deptIt = departmentBudgets_.find(department);
+
+    if (deptIt != departmentBudgets_.end()) {
+        deptIt->second.commit(
+            r.category(),
+            quantity,
+            postTaxCost,
+            id
+        );
+    } else {
+        budget_.commit(
+            r.category(),
+            quantity,
+            postTaxCost,
+            id
+        );
+    }
 
     catalog_.addHoldings(id, quantity);
 
@@ -114,7 +206,8 @@ const PurchaseRecord& AcquisitionManager::purchase(
         preTaxCost,
         postTaxCost,
         true,
-        {}
+        "",
+        department
     );
 }
 
@@ -145,18 +238,27 @@ const PurchaseRecord& AcquisitionManager::cancel(int orderNo) {
     const int quantity = original->quantity;
     const Money preTaxCost = original->preTaxCost;
     const Money postTaxCost = original->cost;
+    const Department department = original->department;
 
-    budget_.refund(
-        category,
-        quantity,
-        postTaxCost,
-        resourceId
-    );
+    auto deptIt = departmentBudgets_.find(department);
 
-    catalog_.addHoldings(
-        resourceId,
-        -quantity
-    );
+    if (deptIt != departmentBudgets_.end()) {
+        deptIt->second.refund(
+            category,
+            quantity,
+            postTaxCost,
+            resourceId
+        );
+    } else {
+        budget_.refund(
+            category,
+            quantity,
+            postTaxCost,
+            resourceId
+        );
+    }
+
+    catalog_.addHoldings(resourceId, -quantity);
 
     history_.push_back(PurchaseRecord{
         nextOrderNo_++,
@@ -169,7 +271,8 @@ const PurchaseRecord& AcquisitionManager::cancel(int orderNo) {
         true,
         "",
         true,
-        orderNo
+        orderNo,
+        department
     });
 
     return history_.back();
@@ -196,17 +299,33 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
             preTaxCost = r->costFor(req.quantity);
             postTaxCost = applyTax(*r, preTaxCost);
 
-            why = budget_.check(
-            r->category(),
-            req.quantity,
-            postTaxCost,
-            req.resourceId
-        );
+            auto deptIt =
+                departmentBudgets_.find(req.department);
+
+            if (deptIt != departmentBudgets_.end()) {
+                why = deptIt->second.check(
+                    r->category(),
+                    req.quantity,
+                    postTaxCost,
+                    req.resourceId
+                );
+            } else {
+                why = budget_.check(
+                    r->category(),
+                    req.quantity,
+                    postTaxCost,
+                    req.resourceId
+                );
+            }
         }
 
         if (why.empty()) {
             results.push_back(
-                purchase(req.resourceId, req.quantity)
+                purchase(
+                    req.resourceId,
+                    req.quantity,
+                    req.department
+                )
             );
         } else {
             results.push_back(
@@ -217,7 +336,8 @@ std::vector<PurchaseRecord> AcquisitionManager::processBatch(
                     preTaxCost,
                     postTaxCost,
                     false,
-                    why
+                    why,
+                    req.department
                 )
             );
         }
@@ -249,17 +369,32 @@ void AcquisitionManager::printReport(std::ostream& os) const {
     Money totalPostTax;
 
     for (const auto& rec : history_) {
-        os << "  #" << std::setw(3) << std::left << rec.orderNo << " "
-           << (rec.cancellation
-        ? "CANCELLED"
-        : (rec.approved ? "APPROVED" : "REJECTED")) << "  "
-           << std::setw(6) << rec.resourceId
-           << " x" << std::setw(3) << rec.quantity
-           << " pre-tax " << std::setw(10)
+        os << "  #"
+           << std::setw(3)
+           << std::left
+           << rec.orderNo
+           << " "
+           << (
+                rec.cancellation
+                    ? "CANCELLED"
+                    : (rec.approved ? "APPROVED" : "REJECTED")
+              )
+           << "  "
+           << std::setw(6)
+           << rec.resourceId
+           << " x"
+           << std::setw(3)
+           << rec.quantity
+           << " pre-tax "
+           << std::setw(10)
            << rec.preTaxCost.toString()
-           << " post-tax " << std::setw(10)
+           << " post-tax "
+           << std::setw(10)
            << rec.cost.toString()
-           << "  " << rec.title;
+           << "  "
+           << rec.title
+           << "  dept: "
+           << departmentName(rec.department);
 
         if (!rec.approved)
             os << "\n        reason: " << rec.reason;
@@ -267,14 +402,14 @@ void AcquisitionManager::printReport(std::ostream& os) const {
         os << "\n";
 
         if (rec.approved) {
-    if (rec.cancellation) {
-        totalPreTax -= rec.preTaxCost;
-        totalPostTax -= rec.cost;
-    } else {
-        totalPreTax += rec.preTaxCost;
-        totalPostTax += rec.cost;
-    }
-}
+            if (rec.cancellation) {
+                totalPreTax -= rec.preTaxCost;
+                totalPostTax -= rec.cost;
+            } else {
+                totalPreTax += rec.preTaxCost;
+                totalPostTax += rec.cost;
+            }
+        }
     }
 
     os << "Total pre-tax: " << totalPreTax << "\n";

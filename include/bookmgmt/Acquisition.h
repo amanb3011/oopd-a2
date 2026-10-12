@@ -5,15 +5,25 @@
 #include <iosfwd>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "bookmgmt/Budget.h"
 #include "bookmgmt/Catalog.h"
 
 namespace bookmgmt {
 
+enum class Department {
+    ComputerScience,
+    Physics,
+    ElectricalEngineering
+};
+
+const char* departmentName(Department d);
+
 struct PurchaseRequest {
     std::string resourceId;
-    int quantity;  // copies for print, seats for electronic
+    int quantity;
+    Department department = Department::ComputerScience;
 };
 
 struct PurchaseRecord {
@@ -29,6 +39,7 @@ struct PurchaseRecord {
 
     bool cancellation = false;
     int originalOrderNo = 0;
+    Department department = Department::ComputerScience;
 };
 class AcquisitionManager {
 public:
@@ -43,19 +54,40 @@ public:
     Money quote(const std::string& id, int quantity) const;
 
     // True if the purchase would be approved; if not, `reason` explains why.
-    bool canPurchase(const std::string& id, int quantity,
-                     std::string* reason = nullptr) const;
+    bool canPurchase(
+    const std::string& id,
+    int quantity,
+    std::string* reason
+    ) const;
+
+    bool canPurchase(
+    const std::string& id,
+    int quantity,
+    Department department = Department::ComputerScience,
+    std::string* reason = nullptr
+    ) const;
 
     const PurchaseRecord& cancel(int orderNo);
     
-    const PurchaseRecord& purchase(const std::string& id, int quantity);
+    const PurchaseRecord& purchase(
+    const std::string& id,
+    int quantity,
+    Department department = Department::ComputerScience
+);
 
     // Buys immediately. Throws NotFoundError, QuotaExceededError,
     // BudgetExceededError or std::invalid_argument. On success the budget
     // and holdings are updated and the record is added to history.
-    PurchaseRecord& record(const Resource* r, const std::string& id, int qty,
-                       Money preTaxCost, Money postTaxCost,
-                       bool approved, std::string reason);
+    PurchaseRecord& record(
+    const Resource* r,
+    const std::string& id,
+    int qty,
+    Money preTaxCost,
+    Money postTaxCost,
+    bool approved,
+    std::string reason,
+    Department department = Department::ComputerScience
+);
     // Processes requests in order; each is approved or rejected on its own
     // (never throws for a rejected request). Every outcome is recorded.
     // EXTENSION POINT: priority ordering, all-or-nothing batches, ...
@@ -65,6 +97,10 @@ public:
     Money totalSpent() const;
 
     void printReport(std::ostream& os) const;
+    void setDepartmentBudget(Department d, Budget budget);
+
+    Budget& departmentBudget(Department d);
+    const Budget& departmentBudget(Department d) const;
 
 private:
     PurchaseRecord& record(const Resource* r, const std::string& id, int qty,
@@ -74,6 +110,7 @@ private:
     Money applyTax(const Resource& r, Money preTaxCost) const;
     Budget& budget_;
     std::vector<PurchaseRecord> history_;
+    std::map<Department, Budget> departmentBudgets_;
     int nextOrderNo_ = 1;
     int printTaxPercent_ = 0;
     int electronicTaxPercent_ = 0;

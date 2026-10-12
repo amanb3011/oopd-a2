@@ -112,6 +112,36 @@ catalog.emplace<EBook>(
     
 
     AcquisitionManager acq(catalog, budget);
+
+    Budget csBudget(Money::of(10000));
+
+csBudget.setQuota(
+    ResourceCategory::Book,
+    {10, Money::of(5000), 3}
+);
+
+csBudget.setQuota(
+    ResourceCategory::ElectronicResource,
+    {20, Money::of(7000), 3}
+);
+
+Budget physicsBudget(Money::of(5000));
+
+physicsBudget.setQuota(
+    ResourceCategory::Book,
+    {5, Money::of(3000), 2}
+);
+
+acq.setDepartmentBudget(
+    Department::ComputerScience,
+    csBudget
+);
+
+acq.setDepartmentBudget(
+    Department::Physics,
+    physicsBudget
+);
+
     acq.setTaxRates(5, 18);
 
     const auto& cancelDemoOrder = acq.purchase("BHC", 1);

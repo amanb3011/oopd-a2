@@ -583,6 +583,85 @@ static void testCancellation() {
     );
 }
 
+static void testDepartmentBudgets() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "DB1",
+        "Department Book",
+        std::vector<std::string>{"Author"},
+        "dept-isbn",
+        "Publisher",
+        2026,
+        Money::of(100)
+    );
+
+    Budget fallback(Money::of(10000));
+
+    AcquisitionManager acq(c, fallback);
+
+    Budget csBudget(Money::of(1000));
+    csBudget.setQuota(
+        ResourceCategory::Book,
+        {5, Money::of(500), 2}
+    );
+
+    Budget physicsBudget(Money::of(300));
+    physicsBudget.setQuota(
+        ResourceCategory::Book,
+        {2, Money::of(200), 1}
+    );
+
+    acq.setDepartmentBudget(
+        Department::ComputerScience,
+        csBudget
+    );
+
+    acq.setDepartmentBudget(
+        Department::Physics,
+        physicsBudget
+    );
+
+    acq.purchase(
+        "DB1",
+        3,
+        Department::ComputerScience
+    );
+
+    CHECK(
+        acq.departmentBudget(
+            Department::ComputerScience
+        ).usageFor(ResourceCategory::Book).units == 3
+    );
+
+    CHECK(
+        acq.departmentBudget(
+            Department::Physics
+        ).usageFor(ResourceCategory::Book).units == 0
+    );
+
+    acq.purchase(
+        "DB1",
+        1,
+        Department::Physics
+    );
+
+    CHECK(
+        acq.departmentBudget(
+            Department::Physics
+        ).usageFor(ResourceCategory::Book).units == 1
+    );
+
+    CHECK_THROWS(
+        acq.purchase(
+            "DB1",
+            2,
+            Department::Physics
+        ),
+        QuotaExceededError
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -592,6 +671,7 @@ int main() {
     testTaxes();
     testTitleQuota();
     testCancellation();
+    testDepartmentBudgets();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }
