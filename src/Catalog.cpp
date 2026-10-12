@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <cctype>
 #include <stdexcept>
-
+#include "bookmgmt/Book.h"
+#include "bookmgmt/MT26151_EBook.h"
+#include "bookmgmt/MT26151_Journal.h"
 #include "bookmgmt/Exceptions.h"
 
 namespace bookmgmt {
@@ -15,6 +17,21 @@ std::string lower(std::string s) {
     return s;
 }
 }  // namespace
+
+std::string lowerCopy(const std::string& s) {
+    std::string result = s;
+
+    std::transform(
+        result.begin(),
+        result.end(),
+        result.begin(),
+        [](unsigned char ch) {
+            return static_cast<char>(std::tolower(ch));
+        }
+    );
+
+    return result;
+}
 
 Resource& Catalog::add(std::unique_ptr<Resource> r) {
     if (!r) throw std::invalid_argument("cannot add a null resource");
@@ -86,6 +103,94 @@ std::vector<const Resource*> Catalog::searchTitle(const std::string& text) const
     return where([&needle](const Resource& r) {
         return lower(r.title()).find(needle) != std::string::npos;
     });
+}
+
+std::vector<const Resource*> Catalog::searchAuthor(
+    const std::string& author) const {
+
+    std::vector<const Resource*> results;
+
+    const std::string needle = lowerCopy(author);
+
+    for (const Resource* r : all()) {
+        if (const auto* book =
+                dynamic_cast<const Book*>(r)) {
+
+            for (const auto& a : book->authors()) {
+                if (lowerCopy(a).find(needle) !=
+                    std::string::npos) {
+
+                    results.push_back(r);
+                    break;
+                }
+            }
+        }
+        else if (const auto* ebook =
+                     dynamic_cast<const EBook*>(r)) {
+
+            for (const auto& a : ebook->authors()) {
+                if (lowerCopy(a).find(needle) !=
+                    std::string::npos) {
+
+                    results.push_back(r);
+                    break;
+                }
+            }
+        }
+    }
+
+    return results;
+}
+
+std::vector<const Resource*> Catalog::searchIdentifier(
+    const std::string& identifier) const {
+
+    std::vector<const Resource*> results;
+
+    for (const Resource* r : all()) {
+        if (const auto* book =
+                dynamic_cast<const Book*>(r)) {
+
+            if (book->isbn() == identifier)
+                results.push_back(r);
+        }
+        else if (const auto* ebook =
+                     dynamic_cast<const EBook*>(r)) {
+
+            if (ebook->isbn() == identifier)
+                results.push_back(r);
+        }
+        else if (const auto* journal =
+                     dynamic_cast<const Journal*>(r)) {
+
+            if (journal->issn() == identifier)
+                results.push_back(r);
+        }
+    }
+
+    return results;
+}
+
+std::vector<const Resource*> Catalog::searchYearRange(
+    int fromYear,
+    int toYear) const {
+
+    if (fromYear > toYear)
+        throw std::invalid_argument(
+            "invalid year range"
+        );
+
+    std::vector<const Resource*> results;
+
+    for (const Resource* r : all()) {
+        if (r->year() >= fromYear &&
+            r->year() <= toYear) {
+
+            results.push_back(r);
+        }
+    }
+
+    return results;
 }
 
 }  // namespace bookmgmt

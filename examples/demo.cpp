@@ -298,6 +298,37 @@ int main() {
             << "\n";
     }
 
+     std::cout << "\n=== Catalog Searches ===\n";
+
+    auto authorResults =
+        catalog.searchAuthor("Martin");
+
+    std::cout
+        << "Author search (Martin): "
+        << authorResults.size()
+        << "\n";
+
+    auto idResults =
+        catalog.searchIdentifier(
+            "978-0132350884"
+        );
+
+    std::cout
+        << "ISBN search: "
+        << idResults.size()
+        << "\n";
+
+    auto yearResults =
+        catalog.searchYearRange(
+            2008,
+            2014
+        );
+
+    std::cout
+        << "Year range 2008-2014: "
+        << yearResults.size()
+        << "\n";
+
     std::cout << "\n=== Acquisition Report ===\n";
 
     acq.printReport(std::cout);

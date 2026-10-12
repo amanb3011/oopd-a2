@@ -3312,8 +3312,12 @@ CMakeFiles/bookmgmt.dir/src/Catalog.cpp.o: /Users/apple/Desktop/Assignments/Book
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stdarg.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/stdint.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Book.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Catalog.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/ElectronicResource.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Exceptions.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_EBook.h \
+  /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Journal.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Money.h \
   /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Resource.h
 
@@ -9119,13 +9123,13 @@ CMakeFiles/bookmgmt.dir/src/Resource.cpp.o: /Users/apple/Desktop/Assignments/Boo
 
 /Users/apple/Desktop/Assignments/BookManagement/src/Money.cpp:
 
-/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Journal.h:
-
 /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_EBook.cpp:
 
 /Users/apple/Desktop/Assignments/BookManagement/src/MT26151_AudioBook.cpp:
 
 /Users/apple/Desktop/Assignments/BookManagement/src/ElectronicResource.cpp:
+
+/Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/MT26151_Journal.h:
 
 /Users/apple/Desktop/Assignments/BookManagement/include/bookmgmt/Book.h:
 

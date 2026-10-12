@@ -46,6 +46,19 @@ public:
     std::vector<const Resource*> where(
         const std::function<bool(const Resource&)>& pred) const;
 
+    std::vector<const Resource*> searchAuthor(
+    const std::string& author
+    ) const;
+
+    std::vector<const Resource*> searchIdentifier(
+        const std::string& identifier
+    ) const;
+
+    std::vector<const Resource*> searchYearRange(
+        int fromYear,
+        int toYear
+    ) const;
+
 private:
     struct Entry {
         std::unique_ptr<Resource> resource;

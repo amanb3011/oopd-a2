@@ -839,6 +839,87 @@ static void testVendors() {
     );
 }
 
+static void testCatalogSearches() {
+    Catalog c;
+
+    c.emplace<Book>(
+        "SB1",
+        "Search Book",
+        std::vector<std::string>{
+            "Robert C. Martin"
+        },
+        "isbn-book",
+        "Publisher",
+        2010,
+        Money::of(100)
+    );
+
+    c.emplace<EBook>(
+        "SE1",
+        "Search EBook",
+        std::vector<std::string>{
+            "Scott Meyers"
+        },
+        "isbn-ebook",
+        "Publisher",
+        2015,
+        Money::of(20),
+        "url",
+        FileFormat::PDF,
+        false
+    );
+
+    c.emplace<Journal>(
+        "SJ1",
+        "Search Journal",
+        "issn-journal",
+        12,
+        "Publisher",
+        2020,
+        Money::of(50)
+    );
+
+    auto martin =
+        c.searchAuthor("martin");
+
+    CHECK(martin.size() == 1);
+    CHECK(martin[0]->id() == "SB1");
+
+    auto scott =
+        c.searchAuthor("SCOTT");
+
+    CHECK(scott.size() == 1);
+    CHECK(scott[0]->id() == "SE1");
+
+    auto isbnBook =
+        c.searchIdentifier("isbn-book");
+
+    CHECK(isbnBook.size() == 1);
+    CHECK(isbnBook[0]->id() == "SB1");
+
+    auto isbnEBook =
+        c.searchIdentifier("isbn-ebook");
+
+    CHECK(isbnEBook.size() == 1);
+    CHECK(isbnEBook[0]->id() == "SE1");
+
+    auto issn =
+        c.searchIdentifier("issn-journal");
+
+    CHECK(issn.size() == 1);
+    CHECK(issn[0]->id() == "SJ1");
+
+    auto years =
+        c.searchYearRange(2010, 2016);
+
+    CHECK(years.size() == 2);
+
+    CHECK_THROWS(
+        c.searchYearRange(2020, 2010),
+        std::invalid_argument
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -852,6 +933,7 @@ int main() {
     testBudgetRollover();
     testAllOrNothingBatch();
     testVendors();
+    testCatalogSearches();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }
