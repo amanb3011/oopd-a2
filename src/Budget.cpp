@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <ostream>
 #include <stdexcept>
+#include <cstdint>
 
 #include "bookmgmt/Exceptions.h"
 
@@ -254,6 +255,29 @@ void Budget::refund(ResourceCategory c, int units, Money cost,
             }
         }
     }
+}
+
+Budget Budget::rollover(int carryPercent) const {
+    if (carryPercent < 0 || carryPercent > 100)
+        throw std::invalid_argument("carry percent must be between 0 and 100");
+
+    const Money unspent = remaining();
+
+    const std::int64_t carriedMinor =
+        (unspent.minorUnits() * carryPercent) / 100;
+
+    Budget nextYear(
+        Money::fromMinor(total_.minorUnits() + carriedMinor)
+    );
+
+    for (const auto& entry : quotas_) {
+        nextYear.setQuota(
+            entry.first,
+            entry.second
+        );
+    }
+
+    return nextYear;
 }
 
 void Budget::print(std::ostream& os) const {

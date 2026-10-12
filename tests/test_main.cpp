@@ -662,6 +662,48 @@ static void testDepartmentBudgets() {
     );
 }
 
+static void testBudgetRollover() {
+    Budget b(Money::of(1000));
+
+    b.setQuota(
+        ResourceCategory::Book,
+        {10, Money::of(1000), 5}
+    );
+
+    b.commit(
+        ResourceCategory::Book,
+        2,
+        Money::of(400),
+        "RB1"
+    );
+
+    Budget next = b.rollover(50);
+
+    CHECK(next.total() == Money::of(1300));
+    CHECK(next.spent() == Money::of(0));
+    CHECK(next.remaining() == Money::of(1300));
+
+    auto q = next.quotaFor(ResourceCategory::Book);
+
+    CHECK(q.has_value());
+    CHECK(q->maxUnits == 10);
+    CHECK(q->maxSpend == Money::of(1000));
+    CHECK(q->maxTitles == 5);
+
+    CHECK(next.usageFor(ResourceCategory::Book).units == 0);
+    CHECK(next.usageFor(ResourceCategory::Book).titles == 0);
+
+    CHECK_THROWS(
+        b.rollover(-1),
+        std::invalid_argument
+    );
+
+    CHECK_THROWS(
+        b.rollover(101),
+        std::invalid_argument
+    );
+}
+
 int main() {
     testMoney();
     testResourcesAndCost();
@@ -672,6 +714,7 @@ int main() {
     testTitleQuota();
     testCancellation();
     testDepartmentBudgets();
+    testBudgetRollover();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }

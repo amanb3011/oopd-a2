@@ -194,6 +194,12 @@ acq.setDepartmentBudget(
     std::cout << "\n=== Budget ===\n";
     budget.print(std::cout);
 
+    std::cout << "\n=== Next Year Budget ===\n";
+
+    Budget nextYearBudget = budget.rollover(50);
+
+    nextYearBudget.print(std::cout);
+
     std::cout << "\n=== Holdings ===\n";
     for (const Resource* r : catalog.all())
         std::cout << "  " << r->id() << ": " << catalog.holdings(r->id())

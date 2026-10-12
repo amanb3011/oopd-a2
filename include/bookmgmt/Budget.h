@@ -34,6 +34,7 @@ public:
     Money total() const { return total_; }
     Money spent() const { return spent_; }
     Money remaining() const { return total_ - spent_; }
+    Budget rollover(int carryPercent) const;
 
     void setQuota(ResourceCategory c, Quota q);
     void removeQuota(ResourceCategory c);
